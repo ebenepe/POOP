@@ -5,7 +5,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom"
 import AdminDashboard from './components/AdminDashboard'
 import AdminLogin from './components/AdminLogin';
 import Form from './components/Form'
-import PatientLogin from './components/Login'
+import PatientLogin from './components/PatientLogin'
 
 // 
 function App() {
