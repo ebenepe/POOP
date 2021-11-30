@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/burlingtoncodeacademy-students/POOP/issues"
   },
-  "homepage": "https://github.com/burlingtoncodeacademy-students/POOP#readme"
+  "homepage": "https://github.com/burlingtoncodeacademy-students/POOP#readme",
+  "dependencies": {
+    "firebase": "^9.5.0"
+  }
 }
