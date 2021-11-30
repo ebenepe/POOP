@@ -1,13 +1,23 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin-top: 20px;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  font-family: "Trebuchet MS"
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Removing bullets from lists (for form layout) */
+ul {
+  list-style-type: none
+}
+
+.formPage {
+  text-align: left
+}
+
+input {
+  font-family: "Trebuchet MS"
+}
+
+button {
+  font-family: "Trebuchet MS"
 }
