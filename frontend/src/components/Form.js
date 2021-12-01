@@ -7,6 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
 function Form() {
+  const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, "data");
   const [uid, setUid] = useState();
 
@@ -37,7 +38,7 @@ function Form() {
   const createEntry = async (evt) => {
     evt.preventDefault(); // prevents refresh before submitting to db
 
-    setUid(newName + 123);
+    // setUid(newName + 123);
     // adds entry to db
     setPain(parseInt(pain));
     setBristol(parseInt(bristol));
