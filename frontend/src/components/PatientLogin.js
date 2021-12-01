@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut,
+  getAuth,
+  updateProfile
 } from "firebase/auth";
 import { auth } from "../firebase-config";
 
@@ -17,6 +16,7 @@ function PatientLogin(props) {
   // states to hold email & password when first registering
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const [registerName, setRegisterName] = useState("");
 
   // states to login in with existing username & password
   const [loginEmail, setLoginEmail] = useState("");
@@ -25,70 +25,80 @@ function PatientLogin(props) {
   // state for storing active user object
   const [user, setUser] = useState({});
 
-  // check whether there is a user logged in, pass that to parent (App.js)
-  // if none, auth.currentUser returns null
-  if (auth.currentUser) {
-    props.setLoggedIn(true);
-  }
+  
+
+  // check whether there is a user logged in. If so, redirect to form
+  // if (auth.currentUser) {
+  //   window.location = "./form"
+  // }
 
   // use pre-built firebase function to update user if auth state is changed
   onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser)
-  })
+    setUser(currentUser);
+  });
 
   // function to create new user / register
   // async necessary because of firebase communication
   const register = async () => {
-      try {
-          // awaits firebase function to create user
-          const user = await createUserWithEmailAndPassword(
-              // use auth from firebase-config and states set below
-              auth, 
-              registerEmail, 
-              registerPassword
-          )
-      } catch (error) {
-          // log error if something goes wrong
-          console.log(error.message)
-      }
-  }
+    try {
+      // awaits firebase function to create user
+      const user = await createUserWithEmailAndPassword(
+        // use auth from firebase-config and states set below
+        auth,
+        registerEmail,
+        registerPassword
+      ).then(() => {
+        updateProfile(getAuth().currentUser, {
+          displayName: registerName,
+        });
+      });
+      window.location = "/"
+    } catch (error) {
+      // log error if something goes wrong
+      console.log(error.message);
+    }
+  };
 
   // function to login existing user
   const login = async () => {
-      try {
-        // awaits firebase function to sign in
-        const user = await signInWithEmailAndPassword(
-            // pass auth & states into function
-            auth, 
-            loginEmail, 
-            loginPassword
-        )
-      } catch (error) {
-          console.log(error.message)
-      }
-  }
-
-  // function to log out 
-  const logout = async () => {
-    await signOut(auth);
-  }
+    try {
+      // awaits firebase function to sign in
+      const user = await signInWithEmailAndPassword(
+        // pass auth & states into function
+        auth,
+        loginEmail,
+        loginPassword
+      );
+      window.location = "./form"
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
-  <div>
+    <div>
+      {/* <h1>Patient Login Portal</h1> */}
       {/* section for registering new account */}
       <h3>Create new account</h3>
       <input
         placeholder="Enter your Email"
         // update registerEmail state when user types into field
         onChange={(event) => {
-            setRegisterEmail(event.target.value);
+          setRegisterEmail(event.target.value);
         }}
       />
       <input
         placeholder="Enter a Password"
         // update registerPassword state when user types into field
         onChange={(event) => {
-            setRegisterPassword(event.target.value);
+          setRegisterPassword(event.target.value);
+        }}
+      />
+      <input
+        placeholder="Enter your name"
+        // update registerName state when user types into field
+        onChange={(event) => {
+          setRegisterName(event.target.value);
         }}
       />
       {/* call register function on click */}
@@ -101,22 +111,20 @@ function PatientLogin(props) {
         placeholder="Enter Your Email"
         // update registerEmail state when user types into field
         onChange={(event) => {
-            setLoginEmail(event.target.value);
+          setLoginEmail(event.target.value);
         }}
       />
       <input
         placeholder="Enter Your Password"
         // update loginPassword state when user types into field
         onChange={(event) => {
-            setLoginPassword(event.target.value);
+          setLoginPassword(event.target.value);
         }}
       />
       {/* call login function on click */}
       <button onClick={login}>Log in</button>
-
-      <button onClick={logout}>Log Out</button>
-  </div>
-  )
+    </div>
+  );
 }
 
 export default PatientLogin;

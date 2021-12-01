@@ -1,6 +1,10 @@
 // Necessary imports:
 import React from "react";
 import { useState } from "react";
+import { auth } from "../firebase-config";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { signOut } from "firebase/auth"
+
 
 function Form() {
   // Variable for date of BM or no-BM:
@@ -12,6 +16,12 @@ function Form() {
   // Variable for "Log NO Bowel Movement" form:
   const [noPoop, setNoPoop] = useState(); // type: boolean - true if NO bowel movement
 
+  const [user, loading, error] = useAuthState(auth)
+
+  const logout = () => {
+    signOut(auth);
+  };
+
   // TO CREATE a function to handle submittal of the "Log a Bowel Movement" form. It should 1) Write the input data to the database, 2) Programatically write the patient's info (name, username, and DOB) and date+time of form submittal to the database, 3) Give the patient confirmation/thanks that they submitted, 4) Bring the patient back to the form page
 
   // TO CREATE a function to handle submittal of the "Log NO Bowel Movement" form. It should 1) Write the input data to the database, 2) Programatically write the patient's info (name, username, and DOB) and date+time of form submittal to the database, 3) Give the patient confirmation/thanks that they submitted, 4) Bring the patient back to the form page
@@ -19,8 +29,16 @@ function Form() {
   // There are currently TWO forms: 1) a very simple one if a patient did NOT have a BM in a day, where they simply input the date that they didn't have a BM and click a button, and 2) a form they would fill in for every BM they have.
   return (
     <div className="formPage">
+      {/* user variable comes from useAuthState hook */}
+      {user ? (
+          <div>
+            <p>Logged in as {user.displayName}</p>
+            <button onClick={logout}>Sign Out</button>
+          </div>
+        ) : null}
       <h1>Patient Form</h1>
-      <h4>Hello, [patient's first name]!</h4>
+      {/* getting user's name, displaying first word */}
+      <h4>Hello, {user.displayName.split(" ")[0]}!</h4>
       Please log each bowel movement you have with the "Log a Bowel Movement"
       form. If you did NOT have a bowel movement on a given day, please use the
       "Log NO Bowel Movement" form.
