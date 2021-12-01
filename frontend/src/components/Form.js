@@ -5,6 +5,7 @@ import { db, auth } from "../firebase-config";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
+import { isValidTimestamp } from "@firebase/util";
 
 function Form() {
   const [users, setUsers] = useState([]);
@@ -38,21 +39,25 @@ function Form() {
   const createEntry = async (evt) => {
     evt.preventDefault(); // prevents refresh before submitting to db
 
+    const timestamp = new Date(poopDate)
+   
     // setUid(newName + 123);
     // adds entry to db
     setPain(parseInt(pain));
     setBristol(parseInt(bristol));
     setBlood(blood === "yes" ? true : false);
+    setPoopDate(poopDate)
+    
 
     await addDoc(usersCollectionRef, {
       name: user.displayName,
       pain: pain,
       bristol: bristol,
-      blood: blood
+      blood: blood,
       // ,
       // uid: uid,
       // ,
-      // date: poopDate
+      date: timestamp
     });
     return alert("submitted");
   };
@@ -115,7 +120,7 @@ function Form() {
                 type="date"
                 name="BMdate"
                 onChange={(e) => {
-                  setPoopDate(e.target.value);
+                  setPoopDate((Date.parse(e.target.value))+18000000);
                 }}
               />
             </label>
@@ -380,8 +385,11 @@ function Form() {
         </div>
       </form>
       <h3>The Data (to make sure this works; will not be in final version):</h3>
+      Name: {user.displayName}
+      <br />
       Date of BM / No-BM: {poopDate}
       {console.log(poopDate)}
+      {console.log("poopDate type: ", typeof poopDate)}
       <br />
       No BM: {noPoop}
       <br />
