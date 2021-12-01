@@ -1,8 +1,17 @@
 // Necessary imports:
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { db } from "../firebase-config";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 
 function Form() {
+
+  const [users, setUsers] = useState([]);
+  const usersCollectionRef = collection(db, "data");
+  const [newName, setNewName] = useState("");
+  const [uid, setUid] = useState();
+
+
   // Variable for date of BM or no-BM:
   const [poopDate, setPoopDate] = useState(); // type: date
   // Variables for "Log a Bowel Movement" form:
@@ -17,6 +26,57 @@ function Form() {
   // TO CREATE a function to handle submittal of the "Log NO Bowel Movement" form. It should 1) Write the input data to the database, 2) Programatically write the patient's info (name, username, and DOB) and date+time of form submittal to the database, 3) Give the patient confirmation/thanks that they submitted, 4) Bring the patient back to the form page
 
   // There are currently TWO forms: 1) a very simple one if a patient did NOT have a BM in a day, where they simply input the date that they didn't have a BM and click a button, and 2) a form they would fill in for every BM they have.
+
+  // sets the name for the entry into the database
+//setNewName(user.displayName)
+
+  // C is for Create (entry)
+  
+  // function to be called for creating
+  const createEntry = async (evt) => {
+    evt.preventDefault() // prevents refresh before submitting to db
+
+    // delete next line when user.displayName is active
+    setNewName("test Name") 
+    setUid(newName + 123)
+    // adds entry to db
+    setPain(parseInt(pain))
+    setBristol(parseInt(bristol))
+    setBlood(blood === "yes" ? true: false)
+    
+    //name: newName, 
+// uid: uid
+    await addDoc(usersCollectionRef, { 
+      name: newName,
+      pain: pain,
+      bristol: bristol,
+      blood: blood,
+      uid: uid
+      // ,
+      // date: poopDate
+      
+
+    }
+      );
+    return alert("submitted")
+  };
+
+  // This area is to read all of the entries on the DB
+  // and will most likely be moved to the admin dashboard
+  // R is for READ (all) 
+  // loads data when page is loaded
+  useEffect(() => {
+    const getEntries = async () => {
+      const data = await getDocs(usersCollectionRef);
+      // console.log('data:')
+      // console.log(data) // for testing purposes
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))) // for testing purposes
+    };
+    getEntries();
+  }, []);
+// **********************************
+
   return (
     <div className="formPage">
       <h1>Patient Form</h1>
@@ -25,10 +85,13 @@ function Form() {
       form. If you did NOT have a bowel movement on a given day, please use the
       "Log NO Bowel Movement" form.
       <br />
-      <br />
-      <hr />
-      <h3>Log NO Bowel Movement:</h3>
+
+      
       <form>
+      {/* <br />
+      <hr />
+      <div>
+      <h3>Log NO Bowel Movement:</h3>
         <label>I did NOT have a bowel movement on this date: </label>
         <input
           type="date"
@@ -37,12 +100,12 @@ function Form() {
             setPoopDate(e.target.value);
           }}
         />
-        <button type="submit">Submit</button>
-      </form>
+        <button onClick={createEntry}>Submit</button>
+      </div> */}
       <br />
       <hr />
       <h3>Log a Bowel Movement:</h3>
-      <form>
+      <div>
         <div className="formQuestion">
           <label>
             Date of BM: 
@@ -311,10 +374,12 @@ function Form() {
             </ul>
           </label>
         </div>
-        <button type="submit">Submit</button>
+        <button onClick={createEntry}>Submit</button>
+        </div>
       </form>
       <h3>The Data (to make sure this works; will not be in final version):</h3>
       Date of BM / No-BM: {poopDate}
+      {console.log(poopDate)}
       <br />
       No BM: {noPoop}
       <br />
