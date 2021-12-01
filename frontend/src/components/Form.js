@@ -7,9 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
 function Form() {
-  const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, "data");
-  const [newName, setNewName] = useState("");
   const [uid, setUid] = useState();
 
   // Variable for date of BM or no-BM:
@@ -39,7 +37,6 @@ function Form() {
   const createEntry = async (evt) => {
     evt.preventDefault(); // prevents refresh before submitting to db
 
-    setNewName(user.displayName);
     setUid(newName + 123);
     // adds entry to db
     setPain(parseInt(pain));
@@ -47,7 +44,7 @@ function Form() {
     setBlood(blood === "yes" ? true : false);
 
     await addDoc(usersCollectionRef, {
-      name: newName,
+      name: user.displayName,
       pain: pain,
       bristol: bristol,
       blood: blood
