@@ -33,16 +33,12 @@ function Form() {
 
   // There are currently TWO forms: 1) a very simple one if a patient did NOT have a BM in a day, where they simply input the date that they didn't have a BM and click a button, and 2) a form they would fill in for every BM they have.
 
-  // sets the name for the entry into the database
-  // setNewName(user.displayName);
-
   // C is for Create (entry)
 
   // function to be called for creating
   const createEntry = async (evt) => {
     evt.preventDefault(); // prevents refresh before submitting to db
 
-    // delete next line when user.displayName is active
     setNewName(user.displayName);
     setUid(newName + 123);
     // adds entry to db
@@ -50,14 +46,13 @@ function Form() {
     setBristol(parseInt(bristol));
     setBlood(blood === "yes" ? true : false);
 
-    //name: newName,
-    // uid: uid
     await addDoc(usersCollectionRef, {
       name: newName,
       pain: pain,
       bristol: bristol,
-      blood: blood,
-      uid: uid,
+      blood: blood
+      // ,
+      // uid: uid,
       // ,
       // date: poopDate
     });
@@ -91,7 +86,6 @@ function Form() {
       ) : null}
       <h1>Patient Form</h1>
       {/* getting user's name, displaying first word */}
-      {/* question mark protects against null displayName value */}
       <h4>Hello, {user.displayName.split(" ")[0]}!</h4>
       Please log each bowel movement you have with the "Log a Bowel Movement"
       form. If you did NOT have a bowel movement on a given day, please use the
