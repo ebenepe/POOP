@@ -4,7 +4,7 @@ import { db, auth } from "../firebase-config";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
-
+import './Dashboard.css'
 
 function AdminDashboard() {
     const [records, setRecords] = useState([]);
