@@ -4,12 +4,13 @@ import { db, auth } from "../firebase-config";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
+import "./Dashboard.css";
 
 function ProviderDashboard() {
-    const [records, setRecords] = useState([]);
-    const usersCollectionRef = collection(db, "data");
+  const [records, setRecords] = useState([]);
+  const usersCollectionRef = collection(db, "data");
 
-    // This area is to read all of the entries on the DB
+  // This area is to read all of the entries on the DB
   // and will most likely be moved to the admin dashboard
   // R is for READ (all)
   // loads data when page is loaded
@@ -25,11 +26,36 @@ function ProviderDashboard() {
   }, []);
   // **********************************
 
-    return (
-        <div>
-            Provider Dashboard Page
-        </div>
-    )
+  return (
+    <div>
+      Provider Dashboard Page
+      <div className="app-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Bristol</th>
+              <th>Blood</th>
+              <th>Pain Level</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {records.map((entry) => {
+              return (
+                <tr>
+                  <td>{entry.name}</td>
+                  <td>{entry.bristol}</td>
+                  <td>{entry.blood}</td>
+                  <td>{entry.pain}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
-export default ProviderDashboard
+export default ProviderDashboard;
