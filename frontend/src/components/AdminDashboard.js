@@ -5,6 +5,7 @@ import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
+
 function AdminDashboard() {
     const [records, setRecords] = useState([]);
     const usersCollectionRef = collection(db, "data");
@@ -26,8 +27,31 @@ function AdminDashboard() {
   // **********************************
 
     return (
-        <div>
-            Admin Dashboard Page
+        <div className="app-container">
+          <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Bristol</th>
+            <th>Blood</th>
+            <th>Pain Level</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          {records.map((entry) => {
+            return (
+          <tr>
+            <td>{entry.name}</td>
+            <td>{entry.bristol}</td>
+            <td>{entry.blood}</td>
+            <td>{entry.pain}</td>
+          </tr>
+          )
+        })}
+        </tbody>
+      </table>  
         </div>
     )
 }
