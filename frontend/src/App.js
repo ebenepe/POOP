@@ -5,15 +5,15 @@ import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import { auth } from "./firebase-config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
-import AdminDashboard from "./components/AdminDashboard";
-import AdminLogin from "./components/AdminLogin";
+import ProviderDashboard from "./components/ProviderDashboard";
 import Form from "./components/Form";
-import PatientLogin from "./components/PatientLogin";
 import Submitted from "./components/Submitted";
+import Login from "./components/Login"
+
+// TO DO
+// - check for permission ; ie on Dashboard page don't show table to patients
 
 function App() {
-  // TODO - create landing page that routes appropriately given patient or admin login status
-  // - add header that shows user who's currently logged in, a log out button
 
   const [user, loading, error] = useAuthState(auth);
 
@@ -31,21 +31,21 @@ function App() {
             path="/"
             element={
               <>
-              <h1>Patient Login Portal</h1>
-              {/* ternary checks whether user is logged in, displays accordingly */}
-              {user ? (
-                <>
-                <h3>
-                  You are logged in as {user.displayName}.{" "}<br />
-                  <NavLink to="/form">Click here to go to the form page</NavLink>
-                </h3>
-                <button onClick={logout}>Sign out</button>
-                </>
-              ) : (
-                <>
-                <PatientLogin />
-                </>
-              )}
+                <h1>Patient Login Portal</h1>
+                {/* ternary checks whether user is logged in, displays accordingly */}
+                {user ? (
+                  <>
+                    <h3>
+                      You are logged in as {user.displayName}. <br />
+                      <NavLink to="/form">
+                        Click here to go to the form page
+                      </NavLink>
+                    </h3>
+                    <button onClick={logout}>Sign out</button>
+                  </>
+                ) : (
+                    <Login loginRedirect="form" />
+                )}
               </>
             }
           />
@@ -67,13 +67,28 @@ function App() {
           />
           <Route path="/submitted" element={<Submitted />} />
           <Route
-            path="/adminlogin"
-            element={<AdminLogin />}
+            path="/provider"
+            element={
+              <>
+                <h1>Provider Login Portal</h1>
+                <p>Note: After creating a new provider account, you must contact the system administrator for authorization.</p>
+                {user ? (
+                  <>
+                    <h3>
+                      You are logged in as {user.displayName}. <br />
+                      <NavLink to="/provider/dashboard">
+                        Click here to go to the provider dashboard page
+                      </NavLink>
+                    </h3>
+                    <button onClick={logout}>Sign out</button>
+                  </>
+                ) : (
+                    <Login loginRedirect="provider/dashboard" />
+                )}
+              </>
+            }
           />
-          <Route
-            path="/admindashboard"
-            element={<AdminDashboard />}
-          />
+          <Route path="/provider/dashboard" element={<ProviderDashboard />} />
         </Routes>
       </BrowserRouter>
     </div>

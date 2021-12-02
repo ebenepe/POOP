@@ -5,7 +5,7 @@ import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
-function AdminDashboard() {
+function ProviderDashboard() {
     const [records, setRecords] = useState([]);
     const usersCollectionRef = collection(db, "data");
 
@@ -27,9 +27,9 @@ function AdminDashboard() {
 
     return (
         <div>
-            Admin Dashboard Page
+            Provider Dashboard Page
         </div>
     )
 }
 
-export default AdminDashboard
+export default ProviderDashboard

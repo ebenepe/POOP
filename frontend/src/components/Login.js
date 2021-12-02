@@ -8,11 +8,13 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase-config";
 
-// This page is where the patient will initially go.
-// They'll make a username and password, which will automatically log them in
+// This component handles login for both patient and provider
+// the property called "loginRedirect" in parent component determines where login will redirect to
+
+// User can make a username and password, which will automatically log them in and redirect appropriately
 // If they are logged out, they can log in with an existing username and password here
 
-function PatientLogin() {
+function Login(props) {
   // states to hold email & password when first registering
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
@@ -61,7 +63,7 @@ function PatientLogin() {
         loginEmail,
         loginPassword
       );
-      window.location = "./form"
+      window.location = `./${props.loginRedirect}`;
     } catch (error) {
       console.log(error.message);
     }
@@ -118,4 +120,4 @@ function PatientLogin() {
   );
 }
 
-export default PatientLogin;
+export default Login;
