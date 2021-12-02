@@ -1,3 +1,44 @@
 .App {
   text-align: center;
 }
+
+.dashboard-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1rem;
+}
+
+.dashboard-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.dashboard-table th, td {
+  border: 1px solid #ffffff;
+  text-align: left;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.dashboard-table th {
+  background-color: rgb(117, 201, 250);
+}
+
+.dashboard-table td {
+  background-color: rgb(205, 235, 253);
+}
+
+.dashboard-table form {
+  display: flex;
+  gap: 5px;
+}
+
+.dashboard-table form td:last-child {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.dashboard-table form * {
+  font-size: 20px;
+}
