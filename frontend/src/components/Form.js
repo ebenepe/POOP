@@ -59,7 +59,7 @@ function Form() {
       // ,
       date: timestamp
     });
-    return alert("submitted");
+    window.location = "/submitted"
   };
 
   // This area is to read all of the entries on the DB
@@ -83,13 +83,14 @@ function Form() {
       {/* user variable comes from useAuthState hook */}
       {user ? (
         <div>
-          <p>Logged in as {user.displayName}</p>
+          {/* checking for existence of displayName, if so indicate that that user is logged in, otherwise indicate email of logged in user */}
+          <p>Logged in {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}.</p>
           <button onClick={logout}>Sign Out</button>
         </div>
       ) : null}
       <h1>Patient Form</h1>
-      {/* getting user's name, displaying first word */}
-      <h4>Hello, {user.displayName.split(" ")[0]}!</h4>
+      {/* checking for existence of displayName, if so displaying first word */}
+      <h4>Hello{user.displayName ? `, ${user.displayName.split(" ")[0]}` : null}!</h4>
       Please log each bowel movement you have with the "Log a Bowel Movement"
       form. If you did NOT have a bowel movement on a given day, please use the
       "Log NO Bowel Movement" form.

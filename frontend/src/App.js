@@ -8,13 +8,20 @@ import { signOut } from "firebase/auth";
 import ProviderDashboard from "./components/ProviderDashboard";
 import Form from "./components/Form";
 import Submitted from "./components/Submitted";
-import Login from "./components/Login"
+import Login from "./components/Login";
 
 // TO DO
 // - check for permission ; ie on Dashboard page don't show table to patients
+// - look into loading ternary check for displaying "you are already logged in" etc so that it doesn't flash after logging in & before redirecting to form
+// - add to submitted: record another response? log out?
+
+// - add "logged in as ... " to provider dashboard
+
+// OTHER PEOPLE
+// - sort by date or patient name, etc
+// - remove data display from bottom of form
 
 function App() {
-
   const [user, loading, error] = useAuthState(auth);
 
   // function to log out
@@ -32,20 +39,7 @@ function App() {
             element={
               <>
                 <h1>Patient Login Portal</h1>
-                {/* ternary checks whether user is logged in, displays accordingly */}
-                {user ? (
-                  <>
-                    <h3>
-                      You are logged in as {user.displayName}. <br />
-                      <NavLink to="/form">
-                        Click here to go to the form page
-                      </NavLink>
-                    </h3>
-                    <button onClick={logout}>Sign out</button>
-                  </>
-                ) : (
-                    <Login loginRedirect="form" />
-                )}
+                <Login loginRedirect="/form" nextPageName="form"/>
               </>
             }
           />
@@ -71,20 +65,11 @@ function App() {
             element={
               <>
                 <h1>Provider Login Portal</h1>
-                <p>Note: After creating a new provider account, you must contact the system administrator for authorization.</p>
-                {user ? (
-                  <>
-                    <h3>
-                      You are logged in as {user.displayName}. <br />
-                      <NavLink to="/provider/dashboard">
-                        Click here to go to the provider dashboard page
-                      </NavLink>
-                    </h3>
-                    <button onClick={logout}>Sign out</button>
-                  </>
-                ) : (
-                    <Login loginRedirect="provider/dashboard" />
-                )}
+                <p>
+                  Note: After creating a new provider account, you must contact
+                  the system administrator for authorization.
+                </p>
+                <Login loginRedirect="/provider/dashboard" nextPageName="dashboard"/>
               </>
             }
           />

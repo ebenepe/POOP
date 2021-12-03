@@ -4,8 +4,10 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   getAuth,
-  updateProfile
+  updateProfile,
+  signOut
 } from "firebase/auth";
+import { NavLink } from "react-router-dom";
 import { auth } from "../firebase-config";
 
 // This component handles login for both patient and provider
@@ -27,6 +29,11 @@ function Login(props) {
   // state for storing active user object
   const [user, setUser] = useState({});
 
+  // function to log out
+  const logout = () => {
+    signOut(auth);
+  };
+
   // use pre-built firebase function to update user if auth state is changed
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
@@ -46,7 +53,7 @@ function Login(props) {
           displayName: registerName,
         });
       });
-      window.location = "/"
+      // window.location = "/";
     } catch (error) {
       // log error if something goes wrong
       console.log(error.message);
@@ -63,7 +70,7 @@ function Login(props) {
         loginEmail,
         loginPassword
       );
-      window.location = `./${props.loginRedirect}`;
+      window.location = props.loginRedirect;
     } catch (error) {
       console.log(error.message);
     }
@@ -71,51 +78,64 @@ function Login(props) {
 
   return (
     <div>
-      {/* section for registering new account */}
-      <h3>Create new account</h3>
-      <input
-        placeholder="Enter your Email"
-        // update registerEmail state when user types into field
-        onChange={(event) => {
-          setRegisterEmail(event.target.value);
-        }}
-      />
-      <input
-        placeholder="Enter a Password"
-        // update registerPassword state when user types into field
-        onChange={(event) => {
-          setRegisterPassword(event.target.value);
-        }}
-      />
-      <input
-        placeholder="Enter your name"
-        // update registerName state when user types into field
-        onChange={(event) => {
-          setRegisterName(event.target.value);
-        }}
-      />
-      {/* call register function on click */}
-      <button onClick={register}>Create Account</button>
-      {/*  */}
-      {/* section for logging into existing account */}
-      {/*  */}
-      <h3>Log into existing account</h3>
-      <input
-        placeholder="Enter Your Email"
-        // update registerEmail state when user types into field
-        onChange={(event) => {
-          setLoginEmail(event.target.value);
-        }}
-      />
-      <input
-        placeholder="Enter Your Password"
-        // update loginPassword state when user types into field
-        onChange={(event) => {
-          setLoginPassword(event.target.value);
-        }}
-      />
-      {/* call login function on click */}
-      <button onClick={login}>Log in</button>
+      {/* ternary checks whether user is logged in, displays accordingly */}
+      {user ? (
+        <>
+          <h3>
+            You are logged in {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}. <br />
+            <NavLink to={props.loginRedirect}>Click here to continue to the {props.nextPageName} page</NavLink>
+          </h3>
+          <button onClick={logout}>Sign out</button>
+        </>
+      ) : (
+        <>
+          {/* section for registering new account */}
+          <h3>Create new account</h3>
+          <input
+            placeholder="Enter your Email"
+            // update registerEmail state when user types into field
+            onChange={(event) => {
+              setRegisterEmail(event.target.value);
+            }}
+          />
+          <input
+            placeholder="Enter a Password"
+            // update registerPassword state when user types into field
+            onChange={(event) => {
+              setRegisterPassword(event.target.value);
+            }}
+          />
+          <input
+            placeholder="Enter your name"
+            // update registerName state when user types into field
+            onChange={(event) => {
+              setRegisterName(event.target.value);
+            }}
+          />
+          {/* call register function on click */}
+          <button onClick={register}>Create Account</button>
+          {/*  */}
+          {/* section for logging into existing account */}
+          {/*  */}
+          <h3>Log into existing account</h3>
+          <input
+            placeholder="Enter Your Email"
+            // update registerEmail state when user types into field
+            onChange={(event) => {
+              setLoginEmail(event.target.value);
+            }}
+          />
+          <input
+            placeholder="Enter Your Password"
+            // update loginPassword state when user types into field
+            onChange={(event) => {
+              setLoginPassword(event.target.value);
+            }}
+          />
+          {/* call login function on click */}
+          <button onClick={login}>Log in</button>
+        </>
+      )}
     </div>
   );
 }

@@ -4,11 +4,14 @@ import { db, auth } from "../firebase-config";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
+
 // import "./Dashboard.css";
 
 function ProviderDashboard() {
   const [records, setRecords] = useState([]);
   const usersCollectionRef = collection(db, "data");
+
+  const [user, loading, error] = useAuthState(auth);
 
   // This area is to read all of the entries on the DB
   // and will most likely be moved to the admin dashboard
@@ -27,34 +30,34 @@ function ProviderDashboard() {
   // **********************************
 
   return (
-    <div>
-      Provider Dashboard Page
-      <div className="dashboard-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Bristol</th>
-              <th>Blood</th>
-              <th>Pain Level</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {records.map((entry) => {
-              return (
+        <div>
+          Provider Dashboard Page
+          <div className="dashboard-table">
+            <table>
+              <thead>
                 <tr>
-                  <td>{entry.name}</td>
-                  <td>{entry.bristol}</td>
-                  <td>{entry.blood}</td>
-                  <td>{entry.pain}</td>
+                  <th>Name</th>
+                  <th>Bristol</th>
+                  <th>Blood</th>
+                  <th>Pain Level</th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
+              </thead>
+
+              <tbody>
+                {records.map((entry) => {
+                  return (
+                    <tr>
+                      <td>{entry.name}</td>
+                      <td>{entry.bristol}</td>
+                      <td>{entry.blood}</td>
+                      <td>{entry.pain}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
   );
 }
 
