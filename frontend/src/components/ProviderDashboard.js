@@ -26,6 +26,18 @@ function ProviderDashboard() {
   }, []);
   // **********************************
 
+  function dateConvert(input) {
+    let formattedDate = new Date(input)
+    let month = formattedDate.getMonth()
+    let day = formattedDate.getDate()
+    let year = formattedDate.getFullYear()
+
+    let dateString = year + "-" + month + "-" + day
+    return dateString
+
+  }
+  
+
   return (
     <div>
       Provider Dashboard Page
@@ -33,6 +45,7 @@ function ProviderDashboard() {
         <table>
           <thead>
             <tr>
+              <th>Date</th>
               <th>Name</th>
               <th>Bristol</th>
               <th>Blood</th>
@@ -44,9 +57,10 @@ function ProviderDashboard() {
             {records.map((entry) => {
               return (
                 <tr>
+                  <td>{dateConvert(entry.date)}</td>
                   <td>{entry.name}</td>
                   <td>{entry.bristol}</td>
-                  <td>{entry.blood}</td>
+                  <td>{(entry.blood)?"yes": "no"}</td>
                   <td>{entry.pain}</td>
                 </tr>
               );
