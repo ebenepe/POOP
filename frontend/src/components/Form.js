@@ -57,7 +57,7 @@ function Form() {
       // ,
       // uid: uid,
       // ,
-      date: timestamp
+      date: poopDate
     });
     window.location = "/submitted"
   };
@@ -78,6 +78,17 @@ function Form() {
   }, []);
   // **********************************
 
+  function dateConvert(input) {
+    let formattedDate = new Date(input)
+    let month = formattedDate.getMonth()
+    let day = formattedDate.getDate()
+    let year = formattedDate.getFullYear()
+
+    let dateString = year + "-" + month + "-" + day
+    return dateString
+
+  }
+
   return (
     <div className="formPage">
       {/* user variable comes from useAuthState hook */}
@@ -92,8 +103,9 @@ function Form() {
       {/* checking for existence of displayName, if so displaying first word */}
       <h4>Hello{user.displayName ? `, ${user.displayName.split(" ")[0]}` : null}!</h4>
       Please log each bowel movement you have with the "Log a Bowel Movement"
-      form. If you did NOT have a bowel movement on a given day, please use the
-      "Log NO Bowel Movement" form.
+      form. 
+      {/* If you did NOT have a bowel movement on a given day, please use the
+      "Log NO Bowel Movement" form. */}
       <br />
       <form>
         {/* <br />
@@ -131,8 +143,8 @@ function Form() {
             <label>
               1. Based on the Bristol Stool Scale (shown to the right), what
               type of poop did you have?
-              <ul>
-                <li>
+              <ul class="bristol_ul">
+                <li><label class="bristol_li">
                   <input
                     type="radio"
                     value="1"
@@ -142,9 +154,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 1: Separate hard lumps
+                  <img src="../images/img_bristol_1.jpg" alt="Type 1: Separate hard lumps" width="200" height="125"/>
+                  Type 1: Separate hard lumps</label>
                 </li>
-                <li>
+                <li ><label class="bristol_li">
                   <input
                     type="radio"
                     value="2"
@@ -154,9 +167,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 2: Lumpy and sausage-like
+                  <img src="../images/img_bristol_2.jpg" alt="Type 2: Lumpy and sausage-like" width="200" height="125"/>
+                  Type 2: Lumpy and sausage-like</label>
                 </li>
-                <li>
+                <li><label class="bristol_li">
                   <input
                     type="radio"
                     value="3"
@@ -166,9 +180,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 3: A sausage shape with cracks in the surface
+                  <img src="../images/img_bristol_3.jpg" alt="Type 3: A sausage shape with cracks in the surface" width="200" height="125"/>
+                  Type 3: A sausage shape with cracks in the surface</label>
                 </li>
-                <li>
+                <li><label class="bristol_li">
                   <input
                     type="radio"
                     value="4"
@@ -178,9 +193,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 4: Like a smooth, soft sausage or snake
+                  <img src="../images/img_bristol_4.jpg" alt="Type 4: Like a smooth, soft sausage or snake" width="200" height="125"/>
+                  Type 4: Like a smooth, soft sausage or snake</label>
                 </li>
-                <li>
+                <li><label class="bristol_li">
                   <input
                     type="radio"
                     value="5"
@@ -190,9 +206,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 5: Soft blobs with clear-cut edges
+                  <img src="../images/img_bristol_5.jpg" alt="Type 5: Soft blobs with clear-cut edges" width="200" height="125"/>
+                  Type 5: Soft blobs with clear-cut edges</label>
                 </li>
-                <li>
+                <li><label class="bristol_li">
                   <input
                     type="radio"
                     value="6"
@@ -202,10 +219,11 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 6: Mushy consistency with ragged edges
+                  <img src="../images/img_bristol_6.jpg" alt="Type 6: Mushy consistency with ragged edges" width="200" height="125"/>
+                  Type 6: Mushy consistency with ragged edges</label>
                 </li>
-                <li>
-                  <input
+                <li><label class="bristol_li">
+                  <input id="bristol_7"
                     type="radio"
                     value="7"
                     name="bristol"
@@ -214,7 +232,9 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
+                  <img src="../images/img_bristol_7.jpg" alt="Type 7: Liquid consistency with no solid pieces" width="200" height="125"/>
                   Type 7: Liquid consistency with no solid pieces
+                  </label>
                 </li>
               </ul>
             </label>
@@ -382,23 +402,26 @@ function Form() {
               </ul>
             </label>
           </div>
+          <div id="confirmation-box">
+          <h3>Is this information correct? Hit Submit to confirm!</h3>
+      <span className="bold">Name:</span> {user.displayName}
+      <br />
+      <span className="bold">Date of bowel movement:</span> {dateConvert(poopDate)}
+      <br />
+      {/* No BM: {noPoop}
+      <br /> */}
+      <span className="bold">Bristol Type:</span> {bristol}
+      <br />
+      <span className="bold">Blood:</span> {blood}
+      <br />
+      <span className="bold">Pain Level:</span> {pain}
+      </div>
+      <br />
+      <br />
           <button onClick={createEntry}>Submit</button>
         </div>
       </form>
-      <h3>The Data (to make sure this works; will not be in final version):</h3>
-      Name: {user.displayName}
-      <br />
-      Date of BM / No-BM: {poopDate}
-      {console.log(poopDate)}
-      {console.log("poopDate type: ", typeof poopDate)}
-      <br />
-      No BM: {noPoop}
-      <br />
-      Bristol Type: {bristol}
-      <br />
-      Blood: {blood}
-      <br />
-      Pain Level: {pain}
+      
     </div>
   );
 }

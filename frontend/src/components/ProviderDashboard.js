@@ -29,35 +29,47 @@ function ProviderDashboard() {
   }, []);
   // **********************************
 
-  return (
-        <div>
-          Provider Dashboard Page
-          <div className="dashboard-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Bristol</th>
-                  <th>Blood</th>
-                  <th>Pain Level</th>
-                </tr>
-              </thead>
+  function dateConvert(input) {
+    let formattedDate = new Date(input);
+    let month = formattedDate.getMonth();
+    let day = formattedDate.getDate();
+    let year = formattedDate.getFullYear();
 
-              <tbody>
-                {records.map((entry) => {
-                  return (
-                    <tr>
-                      <td>{entry.name}</td>
-                      <td>{entry.bristol}</td>
-                      <td>{entry.blood}</td>
-                      <td>{entry.pain}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
+    let dateString = year + "-" + month + "-" + day;
+    return dateString;
+  }
+
+  return (
+    <div>
+      Provider Dashboard Page
+      <div className="dashboard-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Bristol</th>
+              <th>Blood</th>
+              <th>Pain Level</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {records.map((entry) => {
+              return (
+                <tr>
+                  <td>{dateConvert(entry.date)}</td>
+                  <td>{entry.name}</td>
+                  <td>{entry.bristol}</td>
+                  <td>{entry.blood ? "yes" : "no"}</td>
+                  <td>{entry.pain}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
