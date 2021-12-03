@@ -1,13 +1,45 @@
+/* Font import */
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 
 * {
   font-family: 'Tajawal', sans-serif;
 }
 
+/* Aligning center for all pages */
 .App {
   text-align: center;
 }
 
+button {
+  border: 1px solid rgb(15, 131, 199);
+  border-radius: 2px;
+  background-color: white;
+  color:rgb(15, 131, 199);
+  margin: 4px;
+  font-weight: bold;
+  padding: 2px 5px 2px 5px;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color:rgb(117, 201, 250);
+  color: white;
+  border: 1px solid rgb(117, 201, 250)
+}
+
+/* Styling of data confirmation box on Form page  */
+#confirmation-box {
+  padding: 0px 15px 15px 15px;
+  background-color:rgb(117, 201, 250);
+  display: inline-block;
+}
+
+/* For any text we want bolded */
+.bold {
+  font-weight: bold;
+}
+
+/* Styling of the dashboard's table */
 .dashboard-table {
   display: flex;
   flex-direction: column;

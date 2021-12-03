@@ -78,6 +78,17 @@ function Form() {
   }, []);
   // **********************************
 
+  function dateConvert(input) {
+    let formattedDate = new Date(input)
+    let month = formattedDate.getMonth()
+    let day = formattedDate.getDate()
+    let year = formattedDate.getFullYear()
+
+    let dateString = year + "-" + month + "-" + day
+    return dateString
+
+  }
+
   return (
     <div className="formPage">
       {/* user variable comes from useAuthState hook */}
@@ -91,8 +102,9 @@ function Form() {
       {/* getting user's name, displaying first word */}
       <h4>Hello, {user.displayName.split(" ")[0]}!</h4>
       Please log each bowel movement you have with the "Log a Bowel Movement"
-      form. If you did NOT have a bowel movement on a given day, please use the
-      "Log NO Bowel Movement" form.
+      form. 
+      {/* If you did NOT have a bowel movement on a given day, please use the
+      "Log NO Bowel Movement" form. */}
       <br />
       <form>
         {/* <br />
@@ -381,23 +393,26 @@ function Form() {
               </ul>
             </label>
           </div>
+          <div id="confirmation-box">
+          <h3>Is this information correct? Hit Submit to confirm!</h3>
+      <span className="bold">Name:</span> {user.displayName}
+      <br />
+      <span className="bold">Date of bowel movement:</span> {dateConvert(poopDate)}
+      <br />
+      {/* No BM: {noPoop}
+      <br /> */}
+      <span className="bold">Bristol Type:</span> {bristol}
+      <br />
+      <span className="bold">Blood:</span> {blood}
+      <br />
+      <span className="bold">Pain Level:</span> {pain}
+      </div>
+      <br />
+      <br />
           <button onClick={createEntry}>Submit</button>
         </div>
       </form>
-      <h3>The Data (to make sure this works; will not be in final version):</h3>
-      Name: {user.displayName}
-      <br />
-      Date of BM / No-BM: {poopDate}
-      {console.log(poopDate)}
-      {console.log("poopDate type: ", typeof poopDate)}
-      <br />
-      No BM: {noPoop}
-      <br />
-      Bristol Type: {bristol}
-      <br />
-      Blood: {blood}
-      <br />
-      Pain Level: {pain}
+      
     </div>
   );
 }
