@@ -130,8 +130,8 @@ function Form() {
             <label>
               1. Based on the Bristol Stool Scale (shown to the right), what
               type of poop did you have?
-              <ul>
-                <li>
+              <ul class="bristol_ul">
+                <li class="bristol_li">
                   <input
                     type="radio"
                     value="1"
@@ -141,9 +141,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 1: Separate hard lumps
+                  <img src="../images/img_bristol_1.jpg" alt="Type 1: Separate hard lumps" width="200" height="125"/>
+                  <h4>Type 1: Separate hard lumps</h4>
                 </li>
-                <li>
+                <li class="bristol_li">
                   <input
                     type="radio"
                     value="2"
@@ -153,9 +154,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 2: Lumpy and sausage-like
+                  <img src="../images/img_bristol_2.jpg" alt="Type 2: Lumpy and sausage-like" width="200" height="125"/>
+                  <h4>Type 2: Lumpy and sausage-like</h4>
                 </li>
-                <li>
+                <li class="bristol_li">
                   <input
                     type="radio"
                     value="3"
@@ -165,9 +167,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 3: A sausage shape with cracks in the surface
+                  <img src="../images/img_bristol_3.jpg" alt="Type 3: A sausage shape with cracks in the surface" width="200" height="125"/>
+                  <h4>Type 3: A sausage shape with cracks in the surface</h4>
                 </li>
-                <li>
+                <li class="bristol_li">
                   <input
                     type="radio"
                     value="4"
@@ -177,9 +180,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 4: Like a smooth, soft sausage or snake
+                  <img src="../images/img_bristol_4.jpg" alt="Type 4: Like a smooth, soft sausage or snake" width="200" height="125"/>
+                  <h4>Type 4: Like a smooth, soft sausage or snake</h4>
                 </li>
-                <li>
+                <li class="bristol_li">
                   <input
                     type="radio"
                     value="5"
@@ -189,9 +193,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 5: Soft blobs with clear-cut edges
+                  <img src="../images/img_bristol_5.jpg" alt="Type 5: Soft blobs with clear-cut edges" width="200" height="125"/>
+                  <h4>Type 5: Soft blobs with clear-cut edges</h4>
                 </li>
-                <li>
+                <li class="bristol_li">
                   <input
                     type="radio"
                     value="6"
@@ -201,9 +206,10 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 6: Mushy consistency with ragged edges
+                  <img src="../images/img_bristol_6.jpg" alt="Type 6: Mushy consistency with ragged edges" width="200" height="125"/>
+                  <h4>Type 6: Mushy consistency with ragged edges</h4>
                 </li>
-                <li>
+                <li class="bristol_li">
                   <input
                     type="radio"
                     value="7"
@@ -213,7 +219,8 @@ function Form() {
                       setBristol(e.target.value);
                     }}
                   />
-                  Type 7: Liquid consistency with no solid pieces
+                  <img src="../images/img_bristol_7.jpg" alt="Type 7: Liquid consistency with no solid pieces" width="200" height="125"/>
+                  <h4>Type 7: Liquid consistency with no solid pieces</h4>
                 </li>
               </ul>
             </label>
