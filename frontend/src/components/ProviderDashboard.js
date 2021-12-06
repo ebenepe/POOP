@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { db, auth } from "../firebase-config";
-import { collection, getDocs, addDoc, orderBy } from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where, orderBy } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
@@ -18,13 +18,20 @@ function ProviderDashboard() {
   const [patientName, setPatientName] = useState("Frank");
   console.log("should say Frank: ", patientName);
 
+  let q = query(
+    usersCollectionRef,
+    // where("name", "==", location.state.patientName),
+    orderBy("date", "desc")
+  );
+
+
   // This area is to read all of the entries on the DB
   // and will most likely be moved to the admin dashboard
   // R is for READ (all)
   // loads data when page is loaded
   useEffect(() => {
     const getEntries = async () => {
-      const data = await getDocs(usersCollectionRef);
+      const data = await getDocs(q);
       // console.log('data:')
       // console.log(data) // for testing purposes
       setRecords(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));

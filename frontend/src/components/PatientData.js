@@ -1,10 +1,17 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { db, auth } from "../firebase-config";
-import { collection, getDocs, addDoc, query, where, orderBy } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  query,
+  where,
+  orderBy,
+} from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
-import {useLocation} from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 
 // import "./Dashboard.css";
 
@@ -13,12 +20,25 @@ function PatientData(props) {
   const usersCollectionRef = collection(db, "data");
 
   let location = useLocation();
-  console.log("location: ", location)
-  console.log(location.state.patientName)
+  console.log("location: ", location);
+  console.log(location.state.patientName);
 
   // trying out a filter ability:
-  const q = query(usersCollectionRef, where("name", "==", location.state.patientName), orderBy("date", "asc"))
+  let q = query(
+    usersCollectionRef,
+    where("name", "==", location.state.patientName),
+    orderBy("date", "desc")
+  );
 
+
+  // USE THIS AREA FOR THE SORT BY DATE FOR THE PROVIDER DASHBOARD
+  // const q = query(
+  //   usersCollectionRef,
+  //   // where("name", "==", location.state.patientName)
+  //   // ,
+  //   orderBy("date", "asc")
+  // );
+  
   const [user, loading, error] = useAuthState(auth);
 
   // This area is to read all of the entries on the DB
@@ -47,9 +67,6 @@ function PatientData(props) {
     return dateString;
   }
 
-
-
-
   return (
     <div>
       Patient Data Page
@@ -64,7 +81,7 @@ function PatientData(props) {
               <th>Pain Level</th>
             </tr>
           </thead>
-        
+
           <tbody>
             {records.map((entry) => {
               return (
