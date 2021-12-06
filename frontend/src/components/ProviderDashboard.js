@@ -53,7 +53,7 @@ function ProviderDashboard() {
               <th>Pain Level</th>
             </tr>
           </thead>
-
+        // maybe here?
           <tbody>
             {records.map((entry) => {
               return (
