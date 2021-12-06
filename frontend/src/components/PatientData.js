@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { db, auth } from "../firebase-config";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where, orderBy } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import {useLocation} from 'react-router-dom'
@@ -12,6 +12,13 @@ function PatientData(props) {
   const [records, setRecords] = useState([]);
   const usersCollectionRef = collection(db, "data");
 
+  let location = useLocation();
+  console.log("location: ", location)
+  console.log(location.state.patientName)
+
+  // trying out a filter ability:
+  const q = query(usersCollectionRef, where("name", "==", location.state.patientName), orderBy("date", "asc"))
+
   const [user, loading, error] = useAuthState(auth);
 
   // This area is to read all of the entries on the DB
@@ -20,7 +27,7 @@ function PatientData(props) {
   // loads data when page is loaded
   useEffect(() => {
     const getEntries = async () => {
-      const data = await getDocs(usersCollectionRef);
+      const data = await getDocs(q);
       // console.log('data:')
       // console.log(data) // for testing purposes
       setRecords(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -40,9 +47,7 @@ function PatientData(props) {
     return dateString;
   }
 
-  let location = useLocation();
-  console.log("location: ", location)
-  console.log(location.state.patientName)
+
 
 
   return (
@@ -50,11 +55,10 @@ function PatientData(props) {
       Patient Data Page
       <h1>{location.state.patientName}</h1>
       <div className="dashboard-table">
-        {/* <table>
+        <table>
           <thead>
             <tr>
               <th>Date</th>
-              <th>Name</th>
               <th>Bristol</th>
               <th>Blood</th>
               <th>Pain Level</th>
@@ -66,7 +70,6 @@ function PatientData(props) {
               return (
                 <tr>
                   <td>{dateConvert(entry.date)}</td>
-                  <td>{entry.name}</td>
                   <td>{entry.bristol}</td>
                   <td>{entry.blood ? "yes" : "no"}</td>
                   <td>{entry.pain}</td>
@@ -74,7 +77,7 @@ function PatientData(props) {
               );
             })}
           </tbody>
-        </table> */}
+        </table>
       </div>
     </div>
   );
