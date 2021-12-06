@@ -40,8 +40,8 @@ function ProviderDashboard() {
   }
 
   return (
-    <div>
-      Provider Dashboard Page
+    <div className="dashboard-page">
+      <h2 className="login-header">Provider Dashboard</h2>
       <div className="dashboard-table">
         <table>
           <thead>

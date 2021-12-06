@@ -11,6 +11,9 @@ import Submitted from "./components/Submitted";
 import Login from "./components/Login";
 
 // TO DO
+// - dynamically editing security rules / roles
+// - look into firebase security functions
+
 // - check for permission ; ie on Dashboard page don't show table to patients
 // - look into loading ternary check for displaying "you are already logged in" etc so that it doesn't flash after logging in & before redirecting to form
 // - add to submitted: record another response? log out?
@@ -38,8 +41,8 @@ function App() {
             path="/"
             element={
               <>
-                <h1>Patient Login Portal</h1>
-                <Login loginRedirect="/form" nextPageName="form"/>
+                <h1 className="login-header">Patient Login Portal</h1>
+                <Login loginRedirect="/form" nextPageName="form" />
               </>
             }
           />
@@ -51,11 +54,13 @@ function App() {
                 <Form />
               ) : // if not logged in, don't display login error message until the page is done loading
               loading ? null : (
-                <p>
-                  You are not currently logged in. Please{" "}
-                  <NavLink to="/">create an account or log in</NavLink> to view
-                  the form.
-                </p>
+                <div className="login-input">
+                  <p>
+                    You are not currently logged in. Please{" "}
+                    <NavLink to="/">create an account or log in</NavLink> to
+                    view the form.
+                  </p>
+                </div>
               )
             }
           />
@@ -64,12 +69,15 @@ function App() {
             path="/provider"
             element={
               <>
-                <h1>Provider Login Portal</h1>
-                <p>
+                <h1 className="login-header">Provider Login Portal</h1>
+                <p className="login-header">
                   Note: After creating a new provider account, you must contact
                   the system administrator for authorization.
                 </p>
-                <Login loginRedirect="/provider/dashboard" nextPageName="dashboard"/>
+                <Login
+                  loginRedirect="/provider/dashboard"
+                  nextPageName="dashboard"
+                />
               </>
             }
           />

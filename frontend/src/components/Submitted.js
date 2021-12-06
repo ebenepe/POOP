@@ -13,8 +13,8 @@ export default function Submitted() {
     }
 
     return (
-        <div>
-            <p>Your response has been recorded. Thank you.</p>
+        <div className="login-input">
+            <p>Your response has been recorded.</p>
             <NavLink to="/form">Click here to log another bowel movement</NavLink>
             <br />
             <button onClick={logout}>Log out</button>

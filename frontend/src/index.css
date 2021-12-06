@@ -1,9 +1,9 @@
-body {
+/* body {
   margin-top: 20px;
   margin-left: 10vw;
   margin-right: 10vw;
   font-family: "Trebuchet MS"
-}
+} */
 
 /* Removing bullets from lists (for form layout) */
 ul {
@@ -14,10 +14,10 @@ ul {
   text-align: left
 }
 
-input {
+/* input {
   font-family: "Trebuchet MS"
 }
 
 button {
   font-family: "Trebuchet MS"
-}
+} */
