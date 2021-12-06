@@ -1,29 +1,45 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { db, auth } from "../firebase-config";
-import { collection, getDocs, addDoc, query, where, orderBy } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  query,
+  where,
+  orderBy,
+} from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
+import { useLocation } from "react-router-dom";
 
 // import "./Dashboard.css";
 
-function ProviderDashboard() {
+function PatientData(props) {
   const [records, setRecords] = useState([]);
   const usersCollectionRef = collection(db, "data");
 
-  const [user, loading, error] = useAuthState(auth);
+  let location = useLocation();
+  console.log("location: ", location);
+  console.log(location.state.patientName);
 
-  // useState patientName in order to pass props to ProviderDashboard and PatientData pages
-  const [patientName, setPatientName] = useState("Frank");
-  console.log("should say Frank: ", patientName);
-
+  // trying out a filter ability:
   let q = query(
     usersCollectionRef,
-    // where("name", "==", location.state.patientName),
+    where("name", "==", location.state.patientName),
     orderBy("date", "desc")
   );
 
+
+  // USE THIS AREA FOR THE SORT BY DATE FOR THE PROVIDER DASHBOARD
+  // const q = query(
+  //   usersCollectionRef,
+  //   // where("name", "==", location.state.patientName)
+  //   // ,
+  //   orderBy("date", "asc")
+  // );
+  
+  const [user, loading, error] = useAuthState(auth);
 
   // This area is to read all of the entries on the DB
   // and will most likely be moved to the admin dashboard
@@ -51,17 +67,15 @@ function ProviderDashboard() {
     return dateString;
   }
 
-  // function for onClick for patient names
-
   return (
-    <div className="dashboard-page">
-      <h2 className="login-header">Provider Dashboard</h2>
+    <div>
+      Patient Data Page
+      <h1>{location.state.patientName}</h1>
       <div className="dashboard-table">
         <table>
           <thead>
             <tr>
               <th>Date</th>
-              <th>Name</th>
               <th>Bristol</th>
               <th>Blood</th>
               <th>Pain Level</th>
@@ -73,15 +87,6 @@ function ProviderDashboard() {
               return (
                 <tr>
                   <td>{dateConvert(entry.date)}</td>
-                  <td>
-                    <Link
-                      to="/provider/dashboard/patient-data"
-                      state={{ patientName: entry.name }}
-                    >
-                      {entry.name}
-                    </Link>
-                    {/* <a href="/provider/dashboard/patient-data">{entry.name}</a> */}
-                  </td>
                   <td>{entry.bristol}</td>
                   <td>{entry.blood ? "yes" : "no"}</td>
                   <td>{entry.pain}</td>
@@ -95,4 +100,4 @@ function ProviderDashboard() {
   );
 }
 
-export default ProviderDashboard;
+export default PatientData;

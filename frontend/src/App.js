@@ -9,6 +9,8 @@ import ProviderDashboard from "./components/ProviderDashboard";
 import Form from "./components/Form";
 import Submitted from "./components/Submitted";
 import Login from "./components/Login";
+import PatientData from "./components/PatientData"
+import {useState} from 'react'
 
 // TO DO
 // - dynamically editing security rules / roles
@@ -31,6 +33,8 @@ function App() {
   const logout = () => {
     signOut(auth);
   };
+
+
 
   return (
     <div className="App">
@@ -82,6 +86,7 @@ function App() {
             }
           />
           <Route path="/provider/dashboard" element={<ProviderDashboard />} />
+          <Route path="/provider/dashboard/patient-data" element={<PatientData />} />
         </Routes>
       </BrowserRouter>
     </div>
