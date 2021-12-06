@@ -1,22 +1,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { db, auth } from "../firebase-config";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
+import {useLocation} from 'react-router-dom'
 
 // import "./Dashboard.css";
 
-function ProviderDashboard() {
+function PatientData(props) {
   const [records, setRecords] = useState([]);
   const usersCollectionRef = collection(db, "data");
 
   const [user, loading, error] = useAuthState(auth);
-
-  // useState patientName in order to pass props to ProviderDashboard and PatientData pages
-  const [patientName, setPatientName] = useState("Frank");
-  console.log("should say Frank: ", patientName);
 
   // This area is to read all of the entries on the DB
   // and will most likely be moved to the admin dashboard
@@ -44,13 +40,20 @@ function ProviderDashboard() {
     return dateString;
   }
 
-  // function for onClick for patient names
+  let location = useLocation();
+//   location.state;
+  console.log("location: ", location)
+//   const {patientName} = location.state
+//   console.log("patientName: ", patientName)
+
+//   console.log("type of: ", typeof props.patientName);
+//   console.log("should say Frank", props.patientName);
 
   return (
     <div>
-      Provider Dashboard Page
+      Patient Data Page
       <div className="dashboard-table">
-        <table>
+        {/* <table>
           <thead>
             <tr>
               <th>Date</th>
@@ -60,21 +63,13 @@ function ProviderDashboard() {
               <th>Pain Level</th>
             </tr>
           </thead>
-
+        
           <tbody>
             {records.map((entry) => {
               return (
                 <tr>
                   <td>{dateConvert(entry.date)}</td>
-                  <td>
-                    <Link
-                      to="/provider/dashboard/patient-data"
-                      state={{ patientName: 'patientName' }}
-                    >
-                      {entry.name}
-                    </Link>
-                    {/* <a href="/provider/dashboard/patient-data">{entry.name}</a> */}
-                  </td>
+                  <td>{entry.name}</td>
                   <td>{entry.bristol}</td>
                   <td>{entry.blood ? "yes" : "no"}</td>
                   <td>{entry.pain}</td>
@@ -82,10 +77,10 @@ function ProviderDashboard() {
               );
             })}
           </tbody>
-        </table>
+        </table> */}
       </div>
     </div>
   );
 }
 
-export default ProviderDashboard;
+export default PatientData;

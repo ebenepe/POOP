@@ -9,6 +9,8 @@ import ProviderDashboard from "./components/ProviderDashboard";
 import Form from "./components/Form";
 import Submitted from "./components/Submitted";
 import Login from "./components/Login";
+import PatientData from "./components/PatientData"
+import {useState} from 'react'
 
 // TO DO
 // - check for permission ; ie on Dashboard page don't show table to patients
@@ -28,6 +30,8 @@ function App() {
   const logout = () => {
     signOut(auth);
   };
+
+
 
   return (
     <div className="App">
@@ -74,6 +78,7 @@ function App() {
             }
           />
           <Route path="/provider/dashboard" element={<ProviderDashboard />} />
+          <Route path="/provider/dashboard/patient-data" element={<PatientData />} />
         </Routes>
       </BrowserRouter>
     </div>
