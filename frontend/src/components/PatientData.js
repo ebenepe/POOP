@@ -41,17 +41,14 @@ function PatientData(props) {
   }
 
   let location = useLocation();
-//   location.state;
   console.log("location: ", location)
-//   const {patientName} = location.state
-//   console.log("patientName: ", patientName)
+  console.log(location.state.patientName)
 
-//   console.log("type of: ", typeof props.patientName);
-//   console.log("should say Frank", props.patientName);
 
   return (
     <div>
       Patient Data Page
+      <h1>{location.state.patientName}</h1>
       <div className="dashboard-table">
         {/* <table>
           <thead>

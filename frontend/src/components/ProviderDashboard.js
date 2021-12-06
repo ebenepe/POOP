@@ -69,7 +69,7 @@ function ProviderDashboard() {
                   <td>
                     <Link
                       to="/provider/dashboard/patient-data"
-                      state={{ patientName: 'patientName' }}
+                      state={{ patientName: entry.name }}
                     >
                       {entry.name}
                     </Link>
