@@ -351,12 +351,13 @@ console.log("typeof bristol: ", typeof bristol)
               <label>
                 3. Based on this pain scale, how much pain did you feel around
                 this bowel movement?
+                <img id="pain_chart "src="./images/pain_chart.jpg" />
                 <ul>
                 <li>
                     <input
                       type="radio"
-                      id="1"
-                      value="1"
+                      id="0"
+                      value="0"
                       name="pain"
                       onChange={(e) => {
                         setPain(parseInt(e.target.value));
@@ -365,6 +366,7 @@ console.log("typeof bristol: ", typeof bristol)
                     {" "}
                     0 - No pain
                   </li>
+                
                   <li>
                     <input
                       type="radio"
