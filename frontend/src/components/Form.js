@@ -338,7 +338,7 @@ function Form() {
                 3. Based on this pain scale, how much pain did you feel around
                 this bowel movement?
                 <ul>
-                <img src="./images/pain_chart.jpg" />
+                <img id="pain_chart "src="./images/pain_chart.jpg" />
                   <li>
                     <input
                       type="radio"
