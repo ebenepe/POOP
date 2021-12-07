@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 
 // import "./Dashboard.css";
 
@@ -30,7 +30,6 @@ function PatientData(props) {
     orderBy("date", "desc")
   );
 
-
   // USE THIS AREA FOR THE SORT BY DATE FOR THE PROVIDER DASHBOARD
   // const q = query(
   //   usersCollectionRef,
@@ -38,7 +37,7 @@ function PatientData(props) {
   //   // ,
   //   orderBy("date", "asc")
   // );
-  
+
   const [user, loading, error] = useAuthState(auth);
 
   // This area is to read all of the entries on the DB
@@ -67,10 +66,30 @@ function PatientData(props) {
     return dateString;
   }
 
+  function logout() {
+    signOut(auth);
+    window.location = "/provider";
+  }
+
   return (
-    <div>
-      Patient Data Page
-      <h1>{location.state.patientName}</h1>
+    <div id="patient-page">
+      {user ? (
+        <div className="login-hud">
+          {/* checking for existence of displayName, if so indicate that that user is logged in, otherwise indicate email of logged in user */}
+          <p>
+            Logged in{" "}
+            {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}.
+          </p>
+          <button onClick={logout}>Sign Out</button>
+        </div>
+      ) : null}
+      <h2 className="login-header">Provider Dashboard</h2>
+      <div className="patient-data-nav">
+        <p className="patient-name">Name: {location.state.patientName}</p>
+        <NavLink className="link-back" to="/provider/dashboard">
+          Back
+        </NavLink>
+      </div>
       <div className="dashboard-table">
         <table>
           <thead>

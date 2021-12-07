@@ -8,7 +8,7 @@ import { signOut } from "firebase/auth";
 
 // import "./Dashboard.css";
 
-function ProviderDashboard() {
+function ProviderDashboard(props) {
   const [records, setRecords] = useState([]);
   const usersCollectionRef = collection(db, "data");
 
@@ -51,11 +51,29 @@ function ProviderDashboard() {
     return dateString;
   }
 
+  function logout() {
+    signOut(auth);
+    window.location = "/provider"
+  }
+
   // function for onClick for patient names
 
   return (
     <div className="dashboard-page">
+      {user ? (
+        <div className="login-hud">
+          {/* checking for existence of displayName, if so indicate that that user is logged in, otherwise indicate email of logged in user */}
+          <p>
+            Logged in{" "}
+            {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}.
+          </p>
+          <button onClick={logout}>Sign Out</button>
+        </div>
+      ) : null}
       <h2 className="login-header">Provider Dashboard</h2>
+      
+      <p className="patient-name">All Patients</p>
+      
       <div className="dashboard-table">
         <table>
           <thead>

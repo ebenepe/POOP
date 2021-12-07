@@ -102,13 +102,6 @@ function Form() {
       ) : null}
       <div id="form">
         <h1>Patient Form</h1>
-        {/* checking for existence of displayName, if so displaying first word */}
-        <h4>
-          Hello{user.displayName ? `, ${user.displayName.split(" ")[0]}` : null}
-          !
-        </h4>
-        {/* If you did NOT have a bowel movement on a given day, please use the
-      "Log NO Bowel Movement" form. */}
         <form>
           {/* <br />
       <hr />
@@ -124,16 +117,15 @@ function Form() {
         />
         <button onClick={createEntry}>Submit</button>
       </div> */}
-          <br />
-          <hr />
           <h3>Log a Bowel Movement Here:</h3>
           <div>
             <div className="formQuestion">
               <label>
-                Date of BM:
+                Date of Bowel Movement:{" "}
                 <input
                   type="date"
                   name="BMdate"
+                  id="BMdate"
                   onChange={(e) => {
                     setPoopDate(Date.parse(e.target.value) + 18000000);
                   }}
@@ -294,7 +286,6 @@ function Form() {
                       />
                     </label>
                   </li>
-                  <hr/>
                 </ul>
               </label>
             </div>

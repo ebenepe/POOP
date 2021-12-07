@@ -27,7 +27,6 @@ body {
 
 button {
   border: 1px solid rgb(255, 255, 255);
-  border-radius: 2px;
   background-color: rgb(248, 199, 93);
   /* color:rgb(15, 131, 199); */
   margin: 4px;
@@ -46,6 +45,7 @@ button:active {
 /* Styling of data confirmation box on Form page  */
 #confirmation-box {
   padding: 0px 15px 15px 15px;
+  margin: 1.75rem 0 1.75rem 0;
   background-color: rgb(225, 235, 241);
   border-radius: 5px;
   box-shadow: 1px 1px 3px black;
@@ -71,13 +71,13 @@ button:active {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 2rem;
 }
 
 #login input,
 button {
   width: 75%;
   text-align: center;
-  border-radius: 5%;
   margin: 0.5rem 0 0 0;
   padding: 0.5rem;
   font-size: 1rem;
@@ -101,8 +101,9 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 0 2rem 0;
+  margin: 2rem 0 0 0;
   padding: 2rem 0 2rem 0;
+  border-radius: 5px;
   background-color: rgb(225, 235, 241);
   box-shadow: 0px 1px 3px black;
 }
@@ -121,7 +122,7 @@ button {
 }
 
 h1.login-header {
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 
 p.login-header {
@@ -135,10 +136,12 @@ p.login-header {
 
 /* Styling of the dashboard's table */
 .dashboard-table {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
-  padding: 1rem;
+  padding: 1rem 0 2rem 0;
 }
 
 .dashboard-table table {
@@ -148,18 +151,21 @@ p.login-header {
 
 .dashboard-table th,
 td {
-  border: 1px solid #ffffff;
+  border: 1px solid #7a7a7a;
   text-align: left;
   padding: 8px;
   font-size: 16px;
 }
 
 .dashboard-table th {
-  background-color: rgb(117, 201, 250);
+  padding-top: 1rem;
+  font-weight: bold;
+  background-color: rgb(241, 233, 210);
 }
 
 .dashboard-table td {
-  background-color: rgb(205, 235, 253);
+  background-color: rgb(225, 235, 241);
+  
 }
 
 .dashboard-table form {
@@ -190,17 +196,19 @@ td {
 }
 
 .formPage {
-  /* text-align: center; */
-  width: 100%;
-  /* margin: 2rem; */
+  max-width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
 }
 
 .formQuestion {
-  padding: 0.5rem 0 0.5rem 0;
+  margin: 0 0 .5rem 0;
+  padding: 2rem;
+  /* background-color: white; */
+  background-color: rgb(225, 235, 241);
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px black;
 }
 
 .formPage h1,
@@ -219,7 +227,7 @@ h3 {
 }
 
 #form {
-  margin: 1rem;
+  margin-top: 1rem;
 }
 
 .login-input h3 {
@@ -227,20 +235,63 @@ h3 {
   margin: 0;
 }
 
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90%;
+}
+
+.dashboard-page h2 {
+  margin-top: 1em;
+}
+
 hr {
-  border-top: 0.25px solid black;
+  margin-top: 1rem;
+  border: 0.5px solid lightgray;
+  width: 100%
 }
 
 ul {
   list-style-type: none;
 }
 
-.dashboard-page {
+input, button {
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding-top: .5em;
+}
+
+input:focus {
+  border: 1px solid black;
+}
+
+#BMdate {
+  padding-top: .2em;
+  font-size: 1rem;
+}
+
+h1, h2 {
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 200;
+}
+
+.login-error {
+  color: red;
+  margin-top: 0.5em;
+}
+
+.patient-data-nav {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
 }
 
-.dashboard-page h2 {
-  margin-top: 1em;
+.patient-name {
+  align-self: flex-start;
+}
+
+#logo {
+  width: 20vw;
+  margin-top: 2em;
 }

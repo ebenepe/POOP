@@ -38,6 +38,7 @@ function App() {
 
   return (
     <div className="App">
+      <img id="logo" src="/images/poop.png" alt="poop logo"/>
       <BrowserRouter>
         <Routes>
           <Route
