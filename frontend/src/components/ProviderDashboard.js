@@ -2,7 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { db, auth } from "../firebase-config";
-import { collection, getDocs, addDoc, query, where, orderBy } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  query,
+  where,
+  orderBy,
+} from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
@@ -23,7 +30,6 @@ function ProviderDashboard(props) {
     // where("name", "==", location.state.patientName),
     orderBy("date", "desc")
   );
-
 
   // This area is to read all of the entries on the DB
   // and will most likely be moved to the admin dashboard
@@ -47,13 +53,13 @@ function ProviderDashboard(props) {
     let day = formattedDate.getDate();
     let year = formattedDate.getFullYear();
 
-    let dateString = year + "-" + month + "-" + day;
+    let dateString = year + "-" + (month + 1) + "-" + day;
     return dateString;
   }
 
   function logout() {
     signOut(auth);
-    window.location = "/provider"
+    window.location = "/provider";
   }
 
   // function for onClick for patient names
@@ -71,9 +77,9 @@ function ProviderDashboard(props) {
         </div>
       ) : null}
       <h2 className="login-header">Provider Dashboard</h2>
-      
+
       <p className="patient-name">All Patients</p>
-      
+
       <div className="dashboard-table">
         <table>
           <thead>
@@ -101,8 +107,34 @@ function ProviderDashboard(props) {
                     {/* <a href="/provider/dashboard/patient-data">{entry.name}</a> */}
                   </td>
                   <td>{entry.bristol}</td>
-                  <td>{entry.blood ? "yes" : "no"}</td>
-                  <td>{entry.pain}</td>
+                  <td>{entry.blood ? <span id="blood">YES</span> : "none"}</td>
+                  <td>
+                    {entry.pain === 0 ? (
+                      <span id="pain0">{entry.pain}</span>
+                    ) : entry.pain === 1 ? (
+                      <span id="pain1">{entry.pain}</span>
+                    ) : entry.pain === 2 ? (
+                      <span id="pain2">{entry.pain}</span>
+                    ) : entry.pain === 3 ? (
+                      <span id="pain3">{entry.pain}</span>
+                    ) : entry.pain === 4 ? (
+                      <span id="pain4">{entry.pain}</span>
+                    ) : entry.pain === 5 ? (
+                      <span id="pain5">{entry.pain}</span>
+                    ) : entry.pain === 6 ? (
+                      <span id="pain6">{entry.pain}</span>
+                    ) : entry.pain === 7 ? (
+                      <span id="pain7">{entry.pain}</span>
+                    ) : entry.pain === 8 ? (
+                      <span id="pain8">{entry.pain}</span>
+                    ) : entry.pain === 9 ? (
+                      <span id="pain9">{entry.pain}</span>
+                    ) : entry.pain === 10 ? (
+                      <span id="pain10">{entry.pain}</span>
+                    ) : (
+                      <span id="pain-empty">{entry.pain}</span>
+                    )}
+                  </td>
                 </tr>
               );
             })}
