@@ -27,13 +27,7 @@ function Form() {
     signOut(auth);
   };
 
-  // TO CREATE a function to handle submittal of the "Log a Bowel Movement" form. It should 1) Write the input data to the database, 2) Programatically write the patient's info (name, username, and DOB) and date+time of form submittal to the database, 3) Give the patient confirmation/thanks that they submitted, 4) Bring the patient back to the form page
 
-  // TO CREATE a function to handle submittal of the "Log NO Bowel Movement" form. It should 1) Write the input data to the database, 2) Programatically write the patient's info (name, username, and DOB) and date+time of form submittal to the database, 3) Give the patient confirmation/thanks that they submitted, 4) Bring the patient back to the form page
-
-  // There are currently TWO forms: 1) a very simple one if a patient did NOT have a BM in a day, where they simply input the date that they didn't have a BM and click a button, and 2) a form they would fill in for every BM they have.
-
-  // C is for Create (entry)
 
   // function to be called for creating
   const createEntry = async (evt) => {
@@ -43,10 +37,12 @@ function Form() {
 
     // setUid(newName + 123);
     // adds entry to db
-    setPain(parseInt(pain));
-    setBristol(parseInt(bristol));
-    setBlood(blood === "yes" ? true : false);
-    setPoopDate(poopDate);
+    // setPain(parseInt(pain));
+    // console.log("typeof pain: ", typeof pain)
+    // setBristol(parseInt(bristol));
+    // setBlood(blood === "yes" ? true : false);
+    // console.log("typeof blood: ", typeof blood)
+    // setPoopDate(poopDate);
 
     await addDoc(usersCollectionRef, {
       name: user.displayName,
@@ -58,7 +54,7 @@ function Form() {
       // ,
       date: poopDate,
     });
-    window.location = "/submitted";
+    window.location = "/submitted";  
   };
 
   // This area is to read all of the entries on the DB
@@ -83,9 +79,14 @@ function Form() {
     let day = formattedDate.getDate();
     let year = formattedDate.getFullYear();
 
-    let dateString = year + "-" + month + "-" + day;
+    let dateString = year + "-" + (month + 1) + "-" + day;
     return dateString;
   }
+console.log("typeof bristol: ", typeof bristol)
+  console.log("typeof pain: ", typeof pain)
+  console.log("pain: ", pain)
+  console.log("typeof blood: ", typeof blood)
+  console.log("blood: ", blood)
 
   return (
     <div className="formPage">
@@ -145,6 +146,27 @@ function Form() {
               <label>
                 1. Based on the Bristol Stool Scale, what did your bowel movement look like? <br/>(click the image that best matches)
                 <ul class="bristol_ul">
+                <li>
+                  <br/>
+
+                    <label class="bristol_li">
+                      <input
+                        type="radio"
+                        value="0"
+                        name="bristol"
+                        onChange={(e) => {
+                          setBristol(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      I did not have a bowel movement today.
+                      {/* <img
+                        src="../images/img_bristol_3.jpg"
+                        alt="Type 3: A sausage shape with cracks in the surface"
+                      /> */}
+                    </label>
+                  </li>
+                  <hr/>
+
                   <li>
                   <br/>
                     <label class="bristol_li">
@@ -152,9 +174,9 @@ function Form() {
                         type="radio"
                         value="1"
                         name="bristol"
-                        checked={bristol === "1"}
+                        // checked={bristol === "1"}
                         onChange={(e) => {
-                          setBristol(e.target.value);
+                          setBristol(parseInt(e.target.value));
                         }}
                       />{" "}Type 1: Separate hard lumps
                       <img
@@ -171,9 +193,8 @@ function Form() {
                         type="radio"
                         value="2"
                         name="bristol"
-                        checked={bristol === "2"}
                         onChange={(e) => {
-                          setBristol(e.target.value);
+                          setBristol(parseInt(e.target.value));
                         }}
                       />{" "}
                       Type 2: Lumpy and sausage-like
@@ -193,9 +214,8 @@ function Form() {
                         type="radio"
                         value="3"
                         name="bristol"
-                        checked={bristol === "3"}
                         onChange={(e) => {
-                          setBristol(e.target.value);
+                          setBristol(parseInt(e.target.value));
                         }}
                       />{" "}
                       Type 3: A sausage shape with cracks in the surface
@@ -215,9 +235,8 @@ function Form() {
                         type="radio"
                         value="4"
                         name="bristol"
-                        checked={bristol === "4"}
                         onChange={(e) => {
-                          setBristol(e.target.value);
+                          setBristol(parseInt(e.target.value));
                         }}
                       />{" "}
                       Type 4: Like a smooth, soft sausage or snake
@@ -237,9 +256,8 @@ function Form() {
                         type="radio"
                         value="5"
                         name="bristol"
-                        checked={bristol === "5"}
                         onChange={(e) => {
-                          setBristol(e.target.value);
+                          setBristol(parseInt(e.target.value));
                         }}
                       />{" "}
                       Type 5: Soft blobs with clear-cut edges
@@ -259,9 +277,8 @@ function Form() {
                         type="radio"
                         value="6"
                         name="bristol"
-                        checked={bristol === "6"}
                         onChange={(e) => {
-                          setBristol(e.target.value);
+                          setBristol(parseInt(e.target.value));
                         }}
                       />{" "}
                       Type 6: Mushy consistency with ragged edges
@@ -282,9 +299,8 @@ function Form() {
                         type="radio"
                         value="7"
                         name="bristol"
-                        checked={bristol === "7"}
                         onChange={(e) => {
-                          setBristol(e.target.value);
+                          setBristol(parseInt(e.target.value));
                         }}
                       />{" "}
                       Type 7: Liquid consistency with no solid pieces
@@ -310,9 +326,8 @@ function Form() {
                       type="radio"
                       value="yes"
                       name="blood"
-                      checked={blood === "yes"}
                       onChange={(e) => {
-                        setBlood(e.target.value);
+                        setBlood(e.target.value === "yes" ? true : false);
                       }}
                     />{" "}
                     Yes
@@ -322,9 +337,8 @@ function Form() {
                       type="radio"
                       value="no"
                       name="blood"
-                      checked={blood === "no"}
                       onChange={(e) => {
-                        setBlood(e.target.value);
+                        setBlood(e.target.value === "no" ? false : true);
                       }}
                     />{" "}
                     No
@@ -338,38 +352,53 @@ function Form() {
                 3. Based on this pain scale, how much pain did you feel around
                 this bowel movement?
                 <ul>
-                  <li>
+                <li>
                     <input
                       type="radio"
+                      id="1"
                       value="1"
                       name="pain"
-                      checked={pain === "1"}
                       onChange={(e) => {
-                        setPain(e.target.value);
+                        setPain(parseInt(e.target.value));
                       }}
-                    />{" "}
-                    1 - Least pain
+                    />
+                    {" "}
+                    0 - No pain
                   </li>
                   <li>
                     <input
                       type="radio"
-                      value="2"
+                      id="1"
+                      value="1"
                       name="pain"
-                      checked={pain === "2"}
                       onChange={(e) => {
-                        setPain(e.target.value);
+                        setPain(parseInt(e.target.value));
                       }}
-                    />{" "}
-                    2
+                    />
+                    {" "}
+                    1
                   </li>
                   <li>
                     <input
                       type="radio"
+                      id="2"
+                      value="1"
+                      name="pain"
+                      onChange={(e) => {
+                        setPain(parseInt(e.target.value));
+                      }}
+                    />
+                      {" "}
+                    2 - Mild Pain
+                  </li>
+                  <li>
+                    <input
+                      type="radio"
+                      id="3"
                       value="3"
                       name="pain"
-                      checked={pain === "3"}
                       onChange={(e) => {
-                        setPain(e.target.value);
+                        setPain(parseInt(e.target.value));
                       }}
                     />{" "}
                     3
@@ -378,46 +407,46 @@ function Form() {
                     <input
                       type="radio"
                       value="4"
+                      id="4"
                       name="pain"
-                      checked={pain === "4"}
                       onChange={(e) => {
-                        setPain(e.target.value);
+                        setPain(parseInt(e.target.value));
                       }}
                     />{" "}
-                    4
+                    4 - Moderate Pain
                   </li>
                   <li>
                     <input
                       type="radio"
                       value="5"
+                      id="5"
                       name="pain"
-                      checked={pain === "5"}
                       onChange={(e) => {
-                        setPain(e.target.value);
+                        setPain(parseInt(e.target.value));
                       }}
                     />{" "}
-                    5 - Moderate pain
+                    5
                   </li>
                   <li>
                     <input
                       type="radio"
                       value="6"
+                      id="6"
                       name="pain"
-                      checked={pain === "6"}
                       onChange={(e) => {
-                        setPain(e.target.value);
+                        setPain(parseInt(e.target.value));
                       }}
                     />{" "}
-                    6
+                    6 - Severe Pain
                   </li>
                   <li>
                     <input
                       type="radio"
                       value="7"
+                      id="7"
                       name="pain"
-                      checked={pain === "7"}
                       onChange={(e) => {
-                        setPain(e.target.value);
+                        setPain(parseInt(e.target.value));
                       }}
                     />{" "}
                     7
@@ -426,22 +455,22 @@ function Form() {
                     <input
                       type="radio"
                       value="8"
+                      id="8"
                       name="pain"
-                      checked={pain === "8"}
                       onChange={(e) => {
-                        setPain(e.target.value);
+                        setPain(parseInt(e.target.value));
                       }}
                     />{" "}
-                    8
+                    8 - Very Severe Pain
                   </li>
                   <li>
                     <input
                       type="radio"
                       value="9"
+                      id="9"
                       name="pain"
-                      checked={pain === "9"}
                       onChange={(e) => {
-                        setPain(e.target.value);
+                        setPain(parseInt(e.target.value));
                       }}
                     />{" "}
                     9
@@ -450,13 +479,13 @@ function Form() {
                     <input
                       type="radio"
                       value="10"
+                      id="10"
                       name="pain"
-                      checked={pain === "10"}
                       onChange={(e) => {
-                        setPain(e.target.value);
+                        setPain(parseInt(e.target.value));
                       }}
                     />{" "}
-                    10 - Most severe pain
+                    10 - Worst Pain Possible
                   </li>
                 </ul>
               </label>
@@ -474,13 +503,11 @@ function Form() {
                   <span className="bold">Date of BM:</span>{" "}
                   {poopDate ? dateConvert(poopDate) : null}
                 </li>{" "}
-                {/* No BM: {noPoop}
-      <br /> */}
                 <li>
-                  <span className="bold">Bristol Type:</span> {bristol}
+                  <span className="bold">Bristol Type:</span> {bristol === 0 ? "No Bowel Movement" : bristol}
                 </li>
                 <li>
-                  <span className="bold">Blood:</span> {blood}
+                  <span className="bold">Blood:</span> {blood ? "Yes" : "None"}
                 </li>
                 <li>
                   <span className="bold">Pain Level:</span> {pain}

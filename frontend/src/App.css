@@ -244,3 +244,103 @@ ul {
 .dashboard-page h2 {
   margin-top: 1em;
 }
+
+#blood {
+  color: red;
+}
+
+#pain0 {
+  background-color: #75b653;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#pain1 {
+  background-color: #88bc51;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#pain2 {
+  background-color: #98c24c;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#pain3 {
+  background-color: #c0ca42;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#pain4 {
+  background-color: #f1ca2d;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#pain5 {
+  background-color: #ebb231;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#pain6 {
+  background-color: #e19830;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#pain7 {
+  background-color: #dd802c;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#pain8 {
+  background-color: #d6672d;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#pain9 {
+  background-color: #d34b2b;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#pain10 {
+  background-color: #ce2f2c;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+#painempty {
+  background-color: gray;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
