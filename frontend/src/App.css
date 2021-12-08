@@ -205,10 +205,15 @@ td {
 .formQuestion {
   margin: 0 0 .5rem 0;
   padding: 2rem;
-  /* background-color: white; */
-  background-color: rgb(225, 235, 241);
+  background-color: white;
+  /* background-color: rgb(6, 7, 7)41); */
   border-radius: 5px;
   box-shadow: 1px 1px 3px black;
+}
+
+.formQuestion img {
+  width: 100%;
+  max-width: 300px;
 }
 
 .formPage h1,
@@ -221,9 +226,13 @@ h3 {
   margin: 0.5em 0 0.5em 0;
 }
 
-.formPage img {
+/* .formPage img {
   width: 80%;
-  /* height: 125; */
+} */
+
+.formPage input {
+  margin-right: .75em;
+  margin-bottom: .75em;
 }
 
 #form {
@@ -292,7 +301,8 @@ h1, h2 {
 }
 
 #logo {
-  width: 20vw;
+  width: 30vw;
+  max-width: 125px;
   margin-top: 2em;
 }
 

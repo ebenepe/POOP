@@ -122,7 +122,7 @@ console.log("typeof bristol: ", typeof bristol)
           <div>
             <div className="formQuestion">
               <label>
-                Date of Bowel Movement:{" "}
+                Date of Bowel Movement:
                 <input
                   type="date"
                   name="BMdate"
@@ -149,12 +149,7 @@ console.log("typeof bristol: ", typeof bristol)
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />{" "}
-                      I did not have a bowel movement today.
-                      {/* <img
-                        src="../images/img_bristol_3.jpg"
-                        alt="Type 3: A sausage shape with cracks in the surface"
-                      /> */}
+                      />I did not have a bowel movement today.
                     </label>
                   </li>
                   <hr/>
@@ -170,7 +165,7 @@ console.log("typeof bristol: ", typeof bristol)
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />{" "}Type 1: Separate hard lumps
+                      />Type 1<br/>Separate hard lumps
                       <img
                         src="../images/img_bristol_1.jpg"
                         alt="Type 1: Separate hard lumps"
@@ -188,8 +183,8 @@ console.log("typeof bristol: ", typeof bristol)
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />{" "}
-                      Type 2: Lumpy and sausage-like
+                      />
+                      Type 2<br/>Lumpy and sausage-like
                       <img
                         src="../images/img_bristol_2.jpg"
                         alt="Type 2: Lumpy and sausage-like"
@@ -209,8 +204,9 @@ console.log("typeof bristol: ", typeof bristol)
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />{" "}
-                      Type 3: A sausage shape with cracks in the surface
+                      />
+                      Type 3<br/>A sausage shape with cracks in<br/>
+                      the surface
                       <img
                         src="../images/img_bristol_3.jpg"
                         alt="Type 3: A sausage shape with cracks in the surface"
@@ -230,8 +226,8 @@ console.log("typeof bristol: ", typeof bristol)
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />{" "}
-                      Type 4: Like a smooth, soft sausage or snake
+                      />
+                      Type 4<br/>Like a smooth, soft sausage or snake
                       <img
                         src="../images/img_bristol_4.jpg"
                         alt="Type 4: Like a smooth, soft sausage or snake"
@@ -251,8 +247,8 @@ console.log("typeof bristol: ", typeof bristol)
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />{" "}
-                      Type 5: Soft blobs with clear-cut edges
+                      />
+                      Type 5<br/>Soft blobs with clear-cut edges
                       <img
                         src="../images/img_bristol_5.jpg"
                         alt="Type 5: Soft blobs with clear-cut edges"
@@ -272,8 +268,8 @@ console.log("typeof bristol: ", typeof bristol)
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />{" "}
-                      Type 6: Mushy consistency with ragged edges
+                      />
+                      Type 6<br/>Mushy consistency with ragged edges
                       <img
                         src="../images/img_bristol_6.jpg"
                         alt="Type 6: Mushy consistency with ragged edges"
@@ -294,8 +290,8 @@ console.log("typeof bristol: ", typeof bristol)
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />{" "}
-                      Type 7: Liquid consistency with no solid pieces
+                      />
+                      Type 7<br/>Liquid consistency with no solid pieces
                       <img
                         src="../images/img_bristol_7.jpg"
                         alt="Type 7: Liquid consistency with no solid pieces"
@@ -320,7 +316,7 @@ console.log("typeof bristol: ", typeof bristol)
                       onChange={(e) => {
                         setBlood(e.target.value === "yes" ? true : false);
                       }}
-                    />{" "}
+                    />
                     Yes
                   </li>
                   <li>
@@ -331,7 +327,7 @@ console.log("typeof bristol: ", typeof bristol)
                       onChange={(e) => {
                         setBlood(e.target.value === "no" ? false : true);
                       }}
-                    />{" "}
+                    />
                     No
                   </li>
                 </ul>
@@ -354,7 +350,7 @@ console.log("typeof bristol: ", typeof bristol)
                         setPain(parseInt(e.target.value));
                       }}
                     />
-                    {" "}
+                    
                     0 - No pain
                   </li>
                 
@@ -368,7 +364,7 @@ console.log("typeof bristol: ", typeof bristol)
                         setPain(parseInt(e.target.value));
                       }}
                     />
-                    {" "}
+                    
                     1
                   </li>
                   <li>
@@ -381,7 +377,7 @@ console.log("typeof bristol: ", typeof bristol)
                         setPain(parseInt(e.target.value));
                       }}
                     />
-                      {" "}
+                      
                     2 - Mild Pain
                   </li>
                   <li>
@@ -393,7 +389,7 @@ console.log("typeof bristol: ", typeof bristol)
                       onChange={(e) => {
                         setPain(parseInt(e.target.value));
                       }}
-                    />{" "}
+                    />
                     3
                   </li>
                   <li>
@@ -405,7 +401,7 @@ console.log("typeof bristol: ", typeof bristol)
                       onChange={(e) => {
                         setPain(parseInt(e.target.value));
                       }}
-                    />{" "}
+                    />
                     4 - Moderate Pain
                   </li>
                   <li>
@@ -417,7 +413,7 @@ console.log("typeof bristol: ", typeof bristol)
                       onChange={(e) => {
                         setPain(parseInt(e.target.value));
                       }}
-                    />{" "}
+                    />
                     5
                   </li>
                   <li>
@@ -429,7 +425,7 @@ console.log("typeof bristol: ", typeof bristol)
                       onChange={(e) => {
                         setPain(parseInt(e.target.value));
                       }}
-                    />{" "}
+                    />
                     6 - Severe Pain
                   </li>
                   <li>
@@ -441,7 +437,7 @@ console.log("typeof bristol: ", typeof bristol)
                       onChange={(e) => {
                         setPain(parseInt(e.target.value));
                       }}
-                    />{" "}
+                    />
                     7
                   </li>
                   <li>
@@ -453,7 +449,7 @@ console.log("typeof bristol: ", typeof bristol)
                       onChange={(e) => {
                         setPain(parseInt(e.target.value));
                       }}
-                    />{" "}
+                    />
                     8 - Very Severe Pain
                   </li>
                   <li>
@@ -465,7 +461,7 @@ console.log("typeof bristol: ", typeof bristol)
                       onChange={(e) => {
                         setPain(parseInt(e.target.value));
                       }}
-                    />{" "}
+                    />
                     9
                   </li>
                   <li>
@@ -477,7 +473,7 @@ console.log("typeof bristol: ", typeof bristol)
                       onChange={(e) => {
                         setPain(parseInt(e.target.value));
                       }}
-                    />{" "}
+                    />
                     10 - Worst Pain Possible
                   </li>
                 </ul>
