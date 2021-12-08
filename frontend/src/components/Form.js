@@ -13,13 +13,12 @@ function Form() {
   const [uid, setUid] = useState();
 
   // Variable for date of BM or no-BM:
-  const [poopDate, setPoopDate] = useState(); // type: date
+  const [poopDate, setPoopDate] = useState(null);
   // Variables for "Log a Bowel Movement" form:
-  const [bristol, setBristol] = useState(); // type: string (1-7) (could be a number)
-  const [blood, setBlood] = useState(); // type: string (yes/no)
-  const [pain, setPain] = useState(); // type: string (1-10) (could be a number)
-  // Variable for "Log NO Bowel Movement" form:
-  const [noPoop, setNoPoop] = useState(); // type: boolean - true if NO bowel movement
+  const [bristol, setBristol] = useState(null);
+  const [blood, setBlood] = useState(null);
+  const [pain, setPain] = useState(null);
+  const [noPoop, setNoPoop] = useState();
 
   const [user, loading, error] = useAuthState(auth);
 
@@ -27,34 +26,41 @@ function Form() {
     signOut(auth);
   };
 
-
-
   // function to be called for creating
   const createEntry = async (evt) => {
     evt.preventDefault(); // prevents refresh before submitting to db
 
-    const timestamp = new Date(poopDate);
+    if (
+      pain === null ||
+      bristol === null ||
+      blood === null ||
+      poopDate === null
+    ) {
+      alert("Please answer all questions before submitting");
+    } else {
+      const timestamp = new Date(poopDate);
 
-    // setUid(newName + 123);
-    // adds entry to db
-    // setPain(parseInt(pain));
-    // console.log("typeof pain: ", typeof pain)
-    // setBristol(parseInt(bristol));
-    // setBlood(blood === "yes" ? true : false);
-    // console.log("typeof blood: ", typeof blood)
-    // setPoopDate(poopDate);
+      // setUid(newName + 123);
+      // adds entry to db
+      // setPain(parseInt(pain));
+      // console.log("typeof pain: ", typeof pain)
+      // setBristol(parseInt(bristol));
+      // setBlood(blood === "yes" ? true : false);
+      // console.log("typeof blood: ", typeof blood)
+      // setPoopDate(poopDate);
 
-    await addDoc(usersCollectionRef, {
-      name: user.displayName,
-      pain: pain,
-      bristol: bristol,
-      blood: blood,
-      // ,
-      // uid: uid,
-      // ,
-      date: poopDate,
-    });
-    window.location = "/submitted";  
+      await addDoc(usersCollectionRef, {
+        name: user.displayName,
+        pain: pain,
+        bristol: bristol,
+        blood: blood,
+        // ,
+        // uid: uid,
+        // ,
+        date: poopDate,
+      });
+      window.location = "/submitted";
+    }
   };
 
   // This area is to read all of the entries on the DB
@@ -82,11 +88,11 @@ function Form() {
     let dateString = year + "-" + (month + 1) + "-" + day;
     return dateString;
   }
-console.log("typeof bristol: ", typeof bristol)
-  console.log("typeof pain: ", typeof pain)
-  console.log("pain: ", pain)
-  console.log("typeof blood: ", typeof blood)
-  console.log("blood: ", blood)
+  console.log("typeof bristol: ", typeof bristol);
+  console.log("typeof pain: ", typeof pain);
+  console.log("pain: ", pain);
+  console.log("typeof blood: ", typeof blood);
+  console.log("blood: ", blood);
 
   return (
     <div className="formPage">
@@ -135,11 +141,13 @@ console.log("typeof bristol: ", typeof bristol)
             </div>
             <br />
             <div className="formQuestion">
-              <label>
-                1. Based on the Bristol Stool Scale, what did your bowel movement look like? <br/>(click the image that best matches)
+              <label className="formAsk">
+                1. Based on the Bristol Stool Scale, what did your bowel
+                movement look like? <br />
+                (click the image that best matches)
                 <ul class="bristol_ul">
-                <li>
-                  <br/>
+                  <li>
+                    <br />
 
                     <label class="bristol_li">
                       <input
@@ -149,18 +157,14 @@ console.log("typeof bristol: ", typeof bristol)
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />{" "}
-                      I did not have a bowel movement today.
-                      {/* <img
-                        src="../images/img_bristol_3.jpg"
-                        alt="Type 3: A sausage shape with cracks in the surface"
-                      /> */}
+                      />
+                      {"  "}I did not have a bowel movement today.
                     </label>
                   </li>
-                  <hr/>
+                  <hr />
 
                   <li>
-                  <br/>
+                    <br />
                     <label class="bristol_li">
                       <input
                         type="radio"
@@ -170,16 +174,17 @@ console.log("typeof bristol: ", typeof bristol)
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />{" "}Type 1: Separate hard lumps
+                      />{" "}
+                      Type 1: Separate hard lumps
                       <img
                         src="../images/img_bristol_1.jpg"
                         alt="Type 1: Separate hard lumps"
                       />
                     </label>
                   </li>
-                  <hr/>
+                  <hr />
                   <li>
-                  <br/>
+                    <br />
                     <label class="bristol_li">
                       <input
                         type="radio"
@@ -196,10 +201,10 @@ console.log("typeof bristol: ", typeof bristol)
                       />
                     </label>
                   </li>
-                  <hr/>
+                  <hr />
 
                   <li>
-                  <br/>
+                    <br />
 
                     <label class="bristol_li">
                       <input
@@ -217,10 +222,10 @@ console.log("typeof bristol: ", typeof bristol)
                       />
                     </label>
                   </li>
-                  <hr/>
+                  <hr />
 
                   <li>
-                  <br/>
+                    <br />
 
                     <label class="bristol_li">
                       <input
@@ -238,10 +243,10 @@ console.log("typeof bristol: ", typeof bristol)
                       />
                     </label>
                   </li>
-                  <hr/>
+                  <hr />
 
                   <li>
-                  <br/>
+                    <br />
 
                     <label class="bristol_li">
                       <input
@@ -259,10 +264,10 @@ console.log("typeof bristol: ", typeof bristol)
                       />
                     </label>
                   </li>
-                  <hr/>
+                  <hr />
 
                   <li>
-                  <br/>
+                    <br />
 
                     <label class="bristol_li">
                       <input
@@ -280,10 +285,10 @@ console.log("typeof bristol: ", typeof bristol)
                       />
                     </label>
                   </li>
-                  <hr/>
+                  <hr />
 
                   <li>
-                  <br/>
+                    <br />
 
                     <label class="bristol_li">
                       <input
@@ -308,10 +313,180 @@ console.log("typeof bristol: ", typeof bristol)
 
             <br />
 
+            <br />
             <div className="formQuestion">
-              <label>
-                2. Was there any blood in your stool or on the toilet paper?
+              <label className="formAsk">
+                2. Based on this pain scale, how much pain did you feel around
+                this bowel movement? If you did not have a bowel movement,
+                please select the answer with the worst pain you felt today
+                related to your gastrointestinal system.
+                <img id="pain_chart " src="./images/pain_chart.jpg" />
                 <ul>
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        id="0"
+                        value="0"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      0 - No pain
+                    </li>
+                  </label>
+
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        id="1"
+                        value="1"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      1
+                    </li>
+                  </label>
+
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        id="2"
+                        value="1"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      2 - Mild Pain
+                    </li>
+                  </label>
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        id="3"
+                        value="3"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      3
+                    </li>
+                  </label>
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        value="4"
+                        id="4"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      4 - Moderate Pain
+                    </li>
+                  </label>
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        value="5"
+                        id="5"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      5
+                    </li>
+                  </label>
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        value="6"
+                        id="6"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      6 - Severe Pain
+                    </li>
+                  </label>
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        value="7"
+                        id="7"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      7
+                    </li>
+                  </label>
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        value="8"
+                        id="8"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      8 - Very Severe Pain
+                    </li>
+                  </label>
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        value="9"
+                        id="9"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      9
+                    </li>
+                  </label>
+                  <label>
+                    <li>
+                      <input
+                        type="radio"
+                        value="10"
+                        id="10"
+                        name="pain"
+                        onChange={(e) => {
+                          setPain(parseInt(e.target.value));
+                        }}
+                      />{" "}
+                      10 - Worst Pain Possible
+                    </li>
+                  </label>
+                </ul>
+              </label>
+            </div>
+            <br />
+            <div className="formQuestion">
+              <label className="formAsk">
+                3. Was there any blood in your stool or on the toilet paper?
+                <ul>
+                  <label>
                   <li>
                     <input
                       type="radio"
@@ -323,6 +498,8 @@ console.log("typeof bristol: ", typeof bristol)
                     />{" "}
                     Yes
                   </li>
+                  </label>
+                  <label>
                   <li>
                     <input
                       type="radio"
@@ -334,152 +511,7 @@ console.log("typeof bristol: ", typeof bristol)
                     />{" "}
                     No
                   </li>
-                </ul>
-              </label>
-            </div>
-            <br />
-            <div className="formQuestion">
-              <label>
-                3. Based on this pain scale, how much pain did you feel around
-                this bowel movement?
-                <img id="pain_chart "src="./images/pain_chart.jpg" />
-                <ul>
-                <li>
-                    <input
-                      type="radio"
-                      id="0"
-                      value="0"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />
-                    {" "}
-                    0 - No pain
-                  </li>
-                
-                  <li>
-                    <input
-                      type="radio"
-                      id="1"
-                      value="1"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />
-                    {" "}
-                    1
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      id="2"
-                      value="1"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />
-                      {" "}
-                    2 - Mild Pain
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      id="3"
-                      value="3"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />{" "}
-                    3
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      value="4"
-                      id="4"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />{" "}
-                    4 - Moderate Pain
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      value="5"
-                      id="5"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />{" "}
-                    5
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      value="6"
-                      id="6"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />{" "}
-                    6 - Severe Pain
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      value="7"
-                      id="7"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />{" "}
-                    7
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      value="8"
-                      id="8"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />{" "}
-                    8 - Very Severe Pain
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      value="9"
-                      id="9"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />{" "}
-                    9
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      value="10"
-                      id="10"
-                      name="pain"
-                      onChange={(e) => {
-                        setPain(parseInt(e.target.value));
-                      }}
-                    />{" "}
-                    10 - Worst Pain Possible
-                  </li>
+                  </label>
                 </ul>
               </label>
             </div>
@@ -493,17 +525,40 @@ console.log("typeof bristol: ", typeof bristol)
                   <span className="bold">Name:</span> {user.displayName}
                 </li>
                 <li>
-                  <span className="bold">Date of BM:</span>{" "}
-                  {poopDate ? dateConvert(poopDate) : null}
-                </li>{" "}
-                <li>
-                  <span className="bold">Bristol Type:</span> {bristol === 0 ? "No Bowel Movement" : bristol}
+                  <span className="bold">Date of BM: </span>
+                  {poopDate ? (
+                    dateConvert(poopDate)
+                  ) : (
+                    <span className="login-error">No response</span>
+                  )}
                 </li>
                 <li>
-                  <span className="bold">Blood:</span> {blood ? "Yes" : "None"}
+                  <span className="bold">Bristol Type:</span>{" "}
+                  {bristol === 0 ? (
+                    "No Bowel Movement"
+                  ) : bristol ? (
+                    bristol
+                  ) : (
+                    <span className="login-error">No response</span>
+                  )}
                 </li>
                 <li>
-                  <span className="bold">Pain Level:</span> {pain}
+                  <span className="bold">Blood:</span>{" "}
+                  {blood === true ? (
+                    "Yes"
+                  ) : blood === false ? (
+                    "None"
+                  ) : (
+                    <span className="login-error">No response</span>
+                  )}
+                </li>
+                <li>
+                  <span className="bold">Pain Level:</span>{" "}
+                  {typeof pain === "number" ? (
+                    pain
+                  ) : (
+                    <span className="login-error">No Response</span>
+                  )}
                 </li>
               </ul>
 

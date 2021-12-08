@@ -104,9 +104,18 @@ function ProviderDashboard(props) {
                     >
                       {entry.name}
                     </Link>
-                    {/* <a href="/provider/dashboard/patient-data">{entry.name}</a> */}
                   </td>
-                  <td>{entry.bristol}</td>
+                  <td>
+                    {entry.bristol === 0 ? (<span id="bristol0">{entry.bristol}</span>) :
+                    entry.bristol === 1 ? (<span id="bristol1">{entry.bristol}</span>) :
+                    entry.bristol === 2 ? (<span id="bristol2">{entry.bristol}</span>) :
+                    entry.bristol === 3 ? (<span id="bristol3">{entry.bristol}</span>) :
+                    entry.bristol === 4 ? (<span id="bristol4">{entry.bristol}</span>) :
+                    entry.bristol === 5 ? (<span id="bristol5">{entry.bristol}</span>) :
+                    entry.bristol === 6 ? (<span id="bristol6">{entry.bristol}</span>) :
+                    entry.bristol === 7 ? (<span id="bristol7">{entry.bristol}</span>) :
+                    (<span id="bristol-empty">{entry.bristol}</span>)
+                  }</td>
                   <td>{entry.blood ? <span id="blood">YES</span> : "none"}</td>
                   <td>
                     {entry.pain === 0 ? (

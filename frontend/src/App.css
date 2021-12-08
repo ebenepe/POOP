@@ -112,8 +112,6 @@ button {
   max-width: 200px;
 }
 
-
-
 .login-header {
   width: 75vw;
   color: black;
@@ -165,7 +163,6 @@ td {
 
 .dashboard-table td {
   background-color: rgb(225, 235, 241);
-  
 }
 
 .dashboard-table form {
@@ -203,12 +200,24 @@ td {
 }
 
 .formQuestion {
-  margin: 0 0 .5rem 0;
+  margin: 0 0 0.5rem 0;
   padding: 2rem;
   /* background-color: white; */
   background-color: rgb(225, 235, 241);
   border-radius: 5px;
   box-shadow: 1px 1px 3px black;
+}
+
+/* Adding space between radio button and question text */
+input[type="radio"] {
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+
+/* Formatting question text */
+.formAsk {
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .formPage h1,
@@ -249,17 +258,18 @@ h3 {
 hr {
   margin-top: 1rem;
   border: 0.5px solid lightgray;
-  width: 100%
+  width: 100%;
 }
 
 ul {
   list-style-type: none;
 }
 
-input, button {
+input,
+button {
   border-radius: 5px;
   border: 1px solid lightgray;
-  padding-top: .5em;
+  padding-top: 0.5em;
 }
 
 input:focus {
@@ -267,11 +277,12 @@ input:focus {
 }
 
 #BMdate {
-  padding-top: .2em;
+  padding-top: 0.2em;
   font-size: 1rem;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-family: "Helvetica Neue", sans-serif;
   font-weight: 200;
 }
@@ -300,8 +311,89 @@ h1, h2 {
   margin-top: 1em;
 }
 
+#bristol0 {
+  /* background-color: white; */
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+  border: 2px solid rgb(173, 22, 22)
+}
+
+#bristol1 {
+  background-color: rgb(141, 54, 38);
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+  color: white;
+}
+
+#bristol2 {
+  background-color: rgb(199, 75, 53);
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+  color: white;
+}
+
+#bristol3 {
+  background-color: rgb(36, 167, 36);
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+  color: white;
+}
+
+#bristol4 {
+  background-color: rgb(36, 167, 36);
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+  color: white;
+}
+
+#bristol5 {
+  background-color: #e8b91e;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+  color: white;
+}
+
+#bristol6 {
+  background-color: #bb881a;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+  color: white;
+}
+
+#bristol7 {
+  background-color: #8a5b15;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+  color: white;
+}
+
+#bristol-empty {
+  background-color: gray;
+  display: inline-grid;
+  width: 30px;
+  text-align: center;
+  padding-top: 4px;
+}
+
 #blood {
   color: red;
+  font-weight: bold;
 }
 
 #pain0 {
@@ -392,7 +484,7 @@ h1, h2 {
   padding-top: 4px;
 }
 
-#painempty {
+#pain-empty {
   background-color: gray;
   display: inline-grid;
   width: 30px;
