@@ -13,8 +13,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { useLocation, NavLink } from "react-router-dom";
 
-// import "./Dashboard.css";
-
 function PatientData(props) {
   const [records, setRecords] = useState([]);
   const usersCollectionRef = collection(db, "data");
@@ -30,7 +28,7 @@ function PatientData(props) {
     orderBy("date", "desc")
   );
 
-  // USE THIS AREA FOR THE SORT BY DATE FOR THE PROVIDER DASHBOARD
+  // USE THIS AREA FOR THE SORT BY OLDEST-TO-NEWEST DATE FOR THE PROVIDER DASHBOARD
   // const q = query(
   //   usersCollectionRef,
   //   // where("name", "==", location.state.patientName)
@@ -106,9 +104,42 @@ function PatientData(props) {
               return (
                 <tr>
                   <td>{dateConvert(entry.date)}</td>
-                  <td>{entry.bristol}</td>
-                  <td>{entry.blood ? "yes" : "no"}</td>
-                  <td>{entry.pain}</td>
+                  <td>{entry.bristol === 0 ? (<span id="bristol0">{entry.bristol}</span>) :
+                    entry.bristol === 1 ? (<span id="bristol1">{entry.bristol}</span>) :
+                    entry.bristol === 2 ? (<span id="bristol2">{entry.bristol}</span>) :
+                    entry.bristol === 3 ? (<span id="bristol3">{entry.bristol}</span>) :
+                    entry.bristol === 4 ? (<span id="bristol4">{entry.bristol}</span>) :
+                    entry.bristol === 5 ? (<span id="bristol5">{entry.bristol}</span>) :
+                    entry.bristol === 6 ? (<span id="bristol6">{entry.bristol}</span>) :
+                    entry.bristol === 7 ? (<span id="bristol7">{entry.bristol}</span>) :
+                    (<span id="bristol-empty">{entry.bristol}</span>)
+                  }</td>
+                  <td>{entry.blood ? <span id="blood">YES</span> : "none"}</td>
+                  <td>{entry.pain === 0 ? (
+                      <span id="pain0">{entry.pain}</span>
+                    ) : entry.pain === 1 ? (
+                      <span id="pain1">{entry.pain}</span>
+                    ) : entry.pain === 2 ? (
+                      <span id="pain2">{entry.pain}</span>
+                    ) : entry.pain === 3 ? (
+                      <span id="pain3">{entry.pain}</span>
+                    ) : entry.pain === 4 ? (
+                      <span id="pain4">{entry.pain}</span>
+                    ) : entry.pain === 5 ? (
+                      <span id="pain5">{entry.pain}</span>
+                    ) : entry.pain === 6 ? (
+                      <span id="pain6">{entry.pain}</span>
+                    ) : entry.pain === 7 ? (
+                      <span id="pain7">{entry.pain}</span>
+                    ) : entry.pain === 8 ? (
+                      <span id="pain8">{entry.pain}</span>
+                    ) : entry.pain === 9 ? (
+                      <span id="pain9">{entry.pain}</span>
+                    ) : entry.pain === 10 ? (
+                      <span id="pain10">{entry.pain}</span>
+                    ) : (
+                      <span id="pain-empty">{entry.pain}</span>
+                    )}</td>
                 </tr>
               );
             })}
