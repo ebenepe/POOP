@@ -57,8 +57,8 @@ function ProviderDashboard(props) {
     names.sort()
     // update state with buffer array
     setUserNames(names)
-    console.log("userNames: ")
-    console.log(userNames)
+    // console.log("userNames: ")
+    // console.log(userNames)
   }
 
   // This area is to read all of the entries on the DB
@@ -68,17 +68,26 @@ function ProviderDashboard(props) {
   useEffect(() => {
     const getEntries = async () => {
       const data = await getDocs(q);
-      // console.log('data.docs: ')
+      const whatever = await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+console.log("whatever", whatever)
+       // console.log('data.docs: ')
       // console.log(data.docs) // for testing purposes
-      setRecords(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setRecords(whatever);
       // console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); // for testing purposes
-      populateNames(records);
+
+      populateNames(whatever);
+      console.log("records")
+      console.log(records)
     };
     getEntries();
     // console.log("records: ")
     // console.log(records)
   }, []);
   // **********************************
+  console.log("records 2")
+console.log(records)
+  console.log("userNames: ")
+    console.log(userNames)
 
   function dateConvert(input) {
     let formattedDate = new Date(input);
@@ -96,7 +105,6 @@ function ProviderDashboard(props) {
   }
 
   // function for onClick for patient names
-
   return (
     <div className="dashboard-page">
       {user ? (
@@ -113,8 +121,16 @@ function ProviderDashboard(props) {
 
       <div>
       <form >
-        <input type="text" onChange={(evt) => {setPatientName(evt.target.value)}}/>
-        
+        <select type="text" onChange={(evt) => {setPatientName(evt.target.value)}}>
+          <option value="Mountain Goat">Mountain Goat</option>
+          <option value="John J. User">John J. User</option>
+      
+      
+          {/* {userNames.forEach((name) => { */}
+            {/* console.log(name) */}
+            {/* <option value={name}>{name}</option> */}
+          {/* })} */}
+        </select>
         <Link to="/provider/dashboard/patient-data" state={{ patientName: patientName }}>
         <button type="submit" onSubmit={(evt) =>{evt.preventDefault()}}>
         Search</button>
