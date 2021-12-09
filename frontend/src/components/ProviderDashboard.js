@@ -44,19 +44,19 @@ function ProviderDashboard(props) {
       for (let entry of names) {
         if (item.name == entry) {
           match = true;
-        } 
+        }
       }
       if (match == false) {
         // add name to buffer array if it's not on there already
-        names.push(item.name)
+        names.push(item.name);
       }
       // reset match at end of cycle
       match = false;
     }
     // sort names array alphabetically
-    names.sort()
+    names.sort();
     // update state with buffer array
-    setUserNames(names)
+    setUserNames(names);
     // console.log("userNames: ")
     // console.log(userNames)
   }
@@ -68,26 +68,28 @@ function ProviderDashboard(props) {
   useEffect(() => {
     const getEntries = async () => {
       const data = await getDocs(q);
-      const whatever = await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-console.log("whatever", whatever)
-       // console.log('data.docs: ')
+      const dataParsed = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      // console.log('data.docs: ')
       // console.log(data.docs) // for testing purposes
-      setRecords(whatever);
+      setRecords(dataParsed);
       // console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); // for testing purposes
 
-      populateNames(whatever);
-      console.log("records")
-      console.log(records)
+      populateNames(dataParsed);
+      // console.log("records");
+      // console.log(records);
     };
     getEntries();
     // console.log("records: ")
     // console.log(records)
   }, []);
   // **********************************
-  console.log("records 2")
-console.log(records)
-  console.log("userNames: ")
-    console.log(userNames)
+  // console.log("records 2");
+  // console.log(records);
+  // console.log("userNames: ");
+  // console.log(userNames);
 
   function dateConvert(input) {
     let formattedDate = new Date(input);
@@ -103,6 +105,7 @@ console.log(records)
     signOut(auth);
     window.location = "/provider";
   }
+
 
   // function for onClick for patient names
   return (
@@ -120,23 +123,30 @@ console.log(records)
       <h2 className="login-header">Provider Dashboard</h2>
 
       <div>
-      <form >
-        <select type="text" onChange={(evt) => {setPatientName(evt.target.value)}}>
-          <option value="Mountain Goat">Mountain Goat</option>
-          <option value="John J. User">John J. User</option>
-      
-      
-          {/* {userNames.forEach((name) => { */}
-            {/* console.log(name) */}
-            {/* <option value={name}>{name}</option> */}
-          {/* })} */}
-        </select>
-        <Link to="/provider/dashboard/patient-data" state={{ patientName: patientName }}>
-        <button type="submit" onSubmit={(evt) =>{evt.preventDefault()}}>
-        Search</button>
-        </Link>
-      </form>
-    </div>
+        <form>
+          <select
+            type="text"
+            onChange={(evt) => {
+              setPatientName(evt.target.value);
+            }}
+          >
+          {userNames.map( element => <option value={element}>{element}</option>)}
+          </select>
+          <Link
+            to="/provider/dashboard/patient-data"
+            state={{ patientName: patientName }}
+          >
+            <button
+              type="submit"
+              onSubmit={(evt) => {
+                evt.preventDefault();
+              }}
+            >
+              Select
+            </button>
+          </Link>
+        </form>
+      </div>
 
       <p className="patient-name">All Patients</p>
 
@@ -166,16 +176,26 @@ console.log(records)
                     </Link>
                   </td>
                   <td>
-                    {entry.bristol === 0 ? (<span id="bristol0">{entry.bristol}</span>) :
-                    entry.bristol === 1 ? (<span id="bristol1">{entry.bristol}</span>) :
-                    entry.bristol === 2 ? (<span id="bristol2">{entry.bristol}</span>) :
-                    entry.bristol === 3 ? (<span id="bristol3">{entry.bristol}</span>) :
-                    entry.bristol === 4 ? (<span id="bristol4">{entry.bristol}</span>) :
-                    entry.bristol === 5 ? (<span id="bristol5">{entry.bristol}</span>) :
-                    entry.bristol === 6 ? (<span id="bristol6">{entry.bristol}</span>) :
-                    entry.bristol === 7 ? (<span id="bristol7">{entry.bristol}</span>) :
-                    (<span id="bristol-empty">{entry.bristol}</span>)
-                  }</td>
+                    {entry.bristol === 0 ? (
+                      <span id="bristol0">{entry.bristol}</span>
+                    ) : entry.bristol === 1 ? (
+                      <span id="bristol1">{entry.bristol}</span>
+                    ) : entry.bristol === 2 ? (
+                      <span id="bristol2">{entry.bristol}</span>
+                    ) : entry.bristol === 3 ? (
+                      <span id="bristol3">{entry.bristol}</span>
+                    ) : entry.bristol === 4 ? (
+                      <span id="bristol4">{entry.bristol}</span>
+                    ) : entry.bristol === 5 ? (
+                      <span id="bristol5">{entry.bristol}</span>
+                    ) : entry.bristol === 6 ? (
+                      <span id="bristol6">{entry.bristol}</span>
+                    ) : entry.bristol === 7 ? (
+                      <span id="bristol7">{entry.bristol}</span>
+                    ) : (
+                      <span id="bristol-empty">{entry.bristol}</span>
+                    )}
+                  </td>
                   <td>{entry.blood ? <span id="blood">YES</span> : "none"}</td>
                   <td>
                     {entry.pain === 0 ? (
