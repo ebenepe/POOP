@@ -54,9 +54,9 @@ function ProviderDashboard(props) {
       match = false;
     }
     // sort names array alphabetically
-    names.sort();
+    names.sort().unshift("...   ");
     // update state with buffer array
-    setUserNames(names).unshift("...   ")
+    setUserNames(names);
     // console.log("userNames: ")
     // console.log(userNames)
   }
