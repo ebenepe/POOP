@@ -120,7 +120,7 @@ function Login(props) {
                 />
                 {/* error case for wrong email address */}
                 {error === "Firebase: Error (auth/user-not-found)." || error === "Firebase: Error (auth/invalid-email)." ? <p className="login-error">This email is not in our system.<br/>Please check that you entered it correctly, or create a new account.</p> : null}
-                <input
+                <input type="password"
                   placeholder="Enter Your Password"
                   // update loginPassword state when user types into field
                   onChange={(event) => {
@@ -145,7 +145,7 @@ function Login(props) {
                     setRegisterEmail(event.target.value);
                   }}
                 />
-                <input
+                <input type="password"
                   placeholder="Enter a Password"
                   // update registerPassword state when user types into field
                   onChange={(event) => {

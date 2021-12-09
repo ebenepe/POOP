@@ -60,7 +60,7 @@ function PatientData(props) {
     let day = formattedDate.getDate();
     let year = formattedDate.getFullYear();
 
-    let dateString = year + "-" + month + "-" + day;
+    let dateString = year + "-" + (month + 1) + "-" + day;
     return dateString;
   }
 
@@ -75,8 +75,10 @@ function PatientData(props) {
         <div className="login-hud">
           {/* checking for existence of displayName, if so indicate that that user is logged in, otherwise indicate email of logged in user */}
           <p>
+          <span className="bold">
             Logged in{" "}
-            {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}.
+            {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}
+            </span>
           </p>
           <button onClick={logout}>Sign Out</button>
         </div>
@@ -93,8 +95,8 @@ function PatientData(props) {
           <thead>
             <tr>
               <th>Date</th>
-              <th>Bristol</th>
-              <th>Blood</th>
+              <th>Bristol Type</th>
+              <th>Blood Present?</th>
               <th>Pain Level</th>
             </tr>
           </thead>

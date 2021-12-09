@@ -6,13 +6,13 @@
 } */
 
 /* Removing bullets from lists (for form layout) */
-ul {
+/* ul {
   list-style-type: none
-}
+} */
 
-.formPage {
+/* .formPage {
   text-align: left
-}
+} */
 
 /* input {
   font-family: "Trebuchet MS"
