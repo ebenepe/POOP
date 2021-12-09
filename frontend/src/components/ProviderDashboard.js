@@ -56,7 +56,7 @@ function ProviderDashboard(props) {
     // sort names array alphabetically
     names.sort();
     // update state with buffer array
-    setUserNames(names);
+    setUserNames(names).unshift("...   ")
     // console.log("userNames: ")
     // console.log(userNames)
   }
@@ -106,7 +106,6 @@ function ProviderDashboard(props) {
     window.location = "/provider";
   }
 
-
   // function for onClick for patient names
   return (
     <div className="dashboard-page">
@@ -122,33 +121,38 @@ function ProviderDashboard(props) {
       ) : null}
       <h2 className="login-header">Provider Dashboard</h2>
 
-      <div>
-        <form>
-          <select
-            type="text"
-            onChange={(evt) => {
-              setPatientName(evt.target.value);
-            }}
-          >
-          {userNames.map( element => <option value={element}>{element}</option>)}
-          </select>
-          <Link
-            to="/provider/dashboard/patient-data"
-            state={{ patientName: patientName }}
-          >
-            <button
-              type="submit"
-              onSubmit={(evt) => {
-                evt.preventDefault();
+      <div id="dashboard-header">
+        <p className="patient-name bold">All Patients</p>
+        <form id="dropdown-form">
+          <div id="dropdown-menu">
+            <p id="select-tag">Select a patient:</p>
+            <select
+              type="text"
+              onChange={(evt) => {
+                setPatientName(evt.target.value);
               }}
             >
-              Select
-            </button>
-          </Link>
+              {userNames.map((element) => (
+                <option value={element}>{element}</option>
+              ))}
+            </select>
+            <Link
+              to="/provider/dashboard/patient-data"
+              state={{ patientName: patientName }}
+            >
+              <button
+                id="dropdown-button"
+                type="submit"
+                onSubmit={(evt) => {
+                  evt.preventDefault();
+                }}
+              >
+                Select
+              </button>
+            </Link>
+          </div>
         </form>
       </div>
-
-      <p className="patient-name">All Patients</p>
 
       <div className="dashboard-table">
         <table>
