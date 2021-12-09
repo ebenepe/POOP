@@ -78,6 +78,17 @@ function ProviderDashboard(props) {
       ) : null}
       <h2 className="login-header">Provider Dashboard</h2>
 
+      <div>
+      <form >
+        <input type="text" onChange={(evt) => {setPatientName(evt.target.value)}}/>
+        
+        <Link to="/provider/dashboard/patient-data" state={{ patientName: patientName }}>
+        <button type="submit" onSubmit={(evt) =>{evt.preventDefault()}}>
+        Search</button>
+        </Link>
+      </form>
+    </div>
+
       <p className="patient-name">All Patients</p>
 
       <div className="dashboard-table">
