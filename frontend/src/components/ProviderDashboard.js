@@ -17,6 +17,7 @@ import { signOut } from "firebase/auth";
 
 function ProviderDashboard(props) {
   const [records, setRecords] = useState([]);
+  const [userNames, setUserNames] = useState([]);
   const usersCollectionRef = collection(db, "data");
 
   const [user, loading, error] = useAuthState(auth);
@@ -31,6 +32,35 @@ function ProviderDashboard(props) {
     orderBy("date", "desc")
   );
 
+  // function to create list of unique names in db
+  function populateNames(records) {
+    // create buffer array to be populated with names that are in the database
+    let names = [];
+    // create variable to track duplicates
+    let match = false;
+    // loop through all items in records
+    for (let item of records) {
+      // check names buffer array, set match = true if name is already on the list
+      for (let entry of names) {
+        if (item.name == entry) {
+          match = true;
+        } 
+      }
+      if (match == false) {
+        // add name to buffer array if it's not on there already
+        names.push(item.name)
+      }
+      // reset match at end of cycle
+      match = false;
+    }
+    // sort names array alphabetically
+    names.sort()
+    // update state with buffer array
+    setUserNames(names)
+    console.log("userNames: ")
+    console.log(userNames)
+  }
+
   // This area is to read all of the entries on the DB
   // and will most likely be moved to the admin dashboard
   // R is for READ (all)
@@ -38,12 +68,15 @@ function ProviderDashboard(props) {
   useEffect(() => {
     const getEntries = async () => {
       const data = await getDocs(q);
-      // console.log('data:')
-      // console.log(data) // for testing purposes
+      // console.log('data.docs: ')
+      // console.log(data.docs) // for testing purposes
       setRecords(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); // for testing purposes
+      // console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); // for testing purposes
+      populateNames(records);
     };
     getEntries();
+    // console.log("records: ")
+    // console.log(records)
   }, []);
   // **********************************
 
