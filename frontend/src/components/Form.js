@@ -21,15 +21,15 @@ function Form() {
   const [noPoop, setNoPoop] = useState();
 
   const [user, loading, error] = useAuthState(auth);
-
+  // function that logs out user
   const logout = () => {
     signOut(auth);
   };
 
-  // function to be called for creating
+
   const createEntry = async (evt) => {
     evt.preventDefault(); // prevents refresh before submitting to db
-
+    // if statement that sends a alert if not all the required data is not filled out
     if (
       pain === null ||
       bristol === null ||
@@ -39,7 +39,7 @@ function Form() {
       alert("Please answer all questions before submitting");
     } else {
       const timestamp = new Date(poopDate);
-
+      // adds submitted data to database if completely filled out
       await addDoc(usersCollectionRef, {
         name: user.displayName,
         pain: pain,
@@ -58,15 +58,13 @@ function Form() {
   useEffect(() => {
     const getEntries = async () => {
       const data = await getDocs(usersCollectionRef);
-      // console.log('data:')
-      // console.log(data) // for testing purposes
       setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); // for testing purposes
     };
     getEntries();
   }, []);
   // **********************************
-
+  // convert date to year/month/day instead of milliseconds
   function dateConvert(input) {
     let formattedDate = new Date(input);
     let month = formattedDate.getMonth();
@@ -87,7 +85,7 @@ function Form() {
       {/* user variable comes from useAuthState hook */}
       {user ? (
         <div className="login-hud">
-      
+
           {/* checking for existence of displayName, if so indicate that that user is logged in, otherwise indicate email of logged in user */}
           <span className="bold">
             Logged in{" "}
@@ -95,8 +93,8 @@ function Form() {
           </span>
 
           <button className="logout-button" onClick={logout}>Sign Out</button>
-          </div>
-        
+        </div>
+
       ) : null}
       <div id="form">
         <h1>Patient Form</h1>
@@ -113,10 +111,12 @@ function Form() {
                   onChange={(e) => {
                     setPoopDate(Date.parse(e.target.value) + 18000000);
                   }}
+                // setting date to milliseconds so firebase can store it to a number. the 18000000 is to compensate for the time zone.
                 />
               </label>
             </div>
             <br />
+            {/* asking the user where on the bristol stool scale their bowel movement fell */}
             <div className="formQuestion">
               <label>
                 <span className="bold">
@@ -129,7 +129,7 @@ function Form() {
                 <ul class="bristol_ul">
                   <li>
                     <br />
-
+                    {/* radio buttons for each choice on the bristol stool scale that convert their choice to a integer to be stored on firebase */}
                     <label class="bristol_li">
                       <input
                         type="radio"
@@ -310,7 +310,7 @@ function Form() {
                 </ul>
               </label>
             </div>
-
+            {/* radio buttons that take the users input for pain and convert them to a integer */}
             <br />
             <div className="formQuestion">
               <label>
@@ -486,39 +486,41 @@ function Form() {
               </label>
             </div>
             <br />
+            {/* radio button that takes users input about blood in stool as a boolean */}
             <div className="formQuestion">
               <label className="bold">
                 3. Was there any blood in your stool or on the toilet paper?
+              </label>
+              <ul>
+                <label>
+                  <li>
+                    <input
+                      type="radio"
+                      value="yes"
+                      name="blood"
+                      onChange={(e) => {
+                        setBlood(e.target.value === "yes" ? true : false);
+                      }}
+                    />
+                    Yes
+                  </li>
                 </label>
-                <ul>
-                  <label>
-                    <li>
-                      <input
-                        type="radio"
-                        value="yes"
-                        name="blood"
-                        onChange={(e) => {
-                          setBlood(e.target.value === "yes" ? true : false);
-                        }}
-                      />
-                      Yes
-                    </li>
-                  </label>
-                  <label>
-                    <li>
-                      <input
-                        type="radio"
-                        value="no"
-                        name="blood"
-                        onChange={(e) => {
-                          setBlood(e.target.value === "no" ? false : true);
-                        }}
-                      />
-                      No
-                    </li>
-                  </label>
-                </ul>
+                <label>
+                  <li>
+                    <input
+                      type="radio"
+                      value="no"
+                      name="blood"
+                      onChange={(e) => {
+                        setBlood(e.target.value === "no" ? false : true);
+                      }}
+                    />
+                    No
+                  </li>
+                </label>
+              </ul>
             </div>
+            {/* shows a confirmation box with all of the users input inside */}
             <div id="confirmation-box">
               <h3>
                 Please make sure this information is correct before clicking
@@ -565,7 +567,7 @@ function Form() {
                   )}
                 </li>
               </ul>
-
+              {/* creates entry upon submit */}
               <button onClick={createEntry}>Submit</button>
             </div>
           </div>
