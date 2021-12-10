@@ -1,36 +1,23 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { db, auth } from "../firebase-config";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  query,
-  where,
-  orderBy,
-} from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
-// import "./Dashboard.css";
-
-function ProviderDashboard(props) {
+function ProviderDashboard() {
   const [records, setRecords] = useState([]);
   const [userNames, setUserNames] = useState([]);
   const usersCollectionRef = collection(db, "data");
 
+  // used for confirming the authorization to see the data
   const [user, loading, error] = useAuthState(auth);
 
   // useState patientName in order to pass props to ProviderDashboard and PatientData pages
-  const [patientName, setPatientName] = useState("Frank");
-  console.log("should say Frank: ", patientName);
+  const [patientName, setPatientName] = useState("");
 
-  let q = query(
-    usersCollectionRef,
-    // where("name", "==", location.state.patientName),
-    orderBy("date", "desc")
-  );
+  // this query orders the data on the page by newest date first
+  let querySorted = query(usersCollectionRef, orderBy("date", "desc"));
 
   // function to create list of unique names in db
   function populateNames(records) {
@@ -53,79 +40,67 @@ function ProviderDashboard(props) {
       // reset match at end of cycle
       match = false;
     }
-    // sort names array alphabetically
+    // sort names array alphabetically and adds a default entry for the dropdown box
     names.sort().unshift("...   ");
     // update state with buffer array
     setUserNames(names);
-    // console.log("userNames: ")
-    // console.log(userNames)
   }
 
   // This area is to read all of the entries on the DB
-  // and will most likely be moved to the admin dashboard
-  // R is for READ (all)
   // loads data when page is loaded
   useEffect(() => {
     const getEntries = async () => {
-      const data = await getDocs(q);
+      const data = await getDocs(querySorted);
       const dataParsed = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      // console.log('data.docs: ')
-      // console.log(data.docs) // for testing purposes
+      // puts the retrieved info into the records variable
       setRecords(dataParsed);
-      // console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); // for testing purposes
-
+      // this is called to get the name list for the dropdown list
       populateNames(dataParsed);
-      // console.log("records");
-      // console.log(records);
     };
     getEntries();
-    // console.log("records: ")
-    // console.log(records)
   }, []);
-  // **********************************
-  // console.log("records 2");
-  // console.log(records);
-  // console.log("userNames: ");
-  // console.log(userNames);
 
+  // converts the date in the database from seconds to a formatted date
   function dateConvert(input) {
     let formattedDate = new Date(input);
     let month = formattedDate.getMonth();
     let day = formattedDate.getDate();
     let year = formattedDate.getFullYear();
-
     let dateString = year + "-" + (month + 1) + "-" + day;
     return dateString;
   }
 
+  // logs out the current user and sends them to the Provider login page
   function logout() {
     signOut(auth);
     window.location = "/provider";
   }
 
-  // function for onClick for patient names
   return (
     <div className="dashboard-page">
+      {/* checking for existence of displayName, if so indicate that that user is logged in, otherwise indicate email of logged in user */}
       {user ? (
         <div className="login-hud">
-          {/* checking for existence of displayName, if so indicate that that user is logged in, otherwise indicate email of logged in user */}
           <p>
-          <span className="bold">
-            Logged in{" "}
-            {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}
+            <span className="bold">
+              Logged in{" "}
+              {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}
             </span>
           </p>
           <button onClick={logout}>Sign Out</button>
         </div>
       ) : null}
+
       <h2 className="login-header">Provider Dashboard</h2>
 
       <div id="dashboard-header">
         <p className="patient-name bold">All Patients</p>
+
         <form id="dropdown-form">
+          {/* this form is for the dropdown menu to select a patient to view their page */}
           <div id="dropdown-menu">
             <p id="select-tag">Select a patient:</p>
             <select
@@ -134,6 +109,8 @@ function ProviderDashboard(props) {
                 setPatientName(evt.target.value);
               }}
             >
+              {/* userNames is a list of unique Names in the database generated by populateNames function */}
+              {/* adds each entry for the dropdown list */}
               {userNames.map((element) => (
                 <option value={element}>{element}</option>
               ))}
@@ -142,13 +119,7 @@ function ProviderDashboard(props) {
               to="/provider/dashboard/patient-data"
               state={{ patientName: patientName }}
             >
-              <button
-                id="dropdown-button"
-                type="submit"
-                onSubmit={(evt) => {
-                  evt.preventDefault();
-                }}
-              >
+              <button id="dropdown-button" type="submit">
                 Select
               </button>
             </Link>
@@ -159,6 +130,7 @@ function ProviderDashboard(props) {
       <div className="dashboard-table">
         <table>
           <thead>
+            {/* Heading for the table of entries starts here */}
             <tr>
               <th>Date</th>
               <th>Name</th>
@@ -169,11 +141,14 @@ function ProviderDashboard(props) {
           </thead>
 
           <tbody>
+            {/* each entry is returned as a row to this table  */}
             {records.map((entry) => {
               return (
                 <tr>
+                  {/* the date is formatted for display */}
                   <td>{dateConvert(entry.date)}</td>
                   <td>
+                    {/* names are made a link to a page generated from their data */}
                     <Link
                       to="/provider/dashboard/patient-data"
                       state={{ patientName: entry.name }}
@@ -182,6 +157,7 @@ function ProviderDashboard(props) {
                     </Link>
                   </td>
                   <td>
+                    {/* nested ternary for displaying the bristol data for the entry */}
                     {entry.bristol === 0 ? (
                       <span id="bristol0">{entry.bristol}</span>
                     ) : entry.bristol === 1 ? (
@@ -202,8 +178,12 @@ function ProviderDashboard(props) {
                       <span id="bristol-empty">{entry.bristol}</span>
                     )}
                   </td>
-                  <td>{entry.blood ? <span id="blood">YES</span> : "none"}</td>
                   <td>
+                    {/* if there is blook present, this will be displayed red */}
+                    {entry.blood ? <span id="blood">YES</span> : "none"}
+                  </td>
+                  <td>
+                    {/* nested ternary for the display of the pain data */}
                     {entry.pain === 0 ? (
                       <span id="pain0">{entry.pain}</span>
                     ) : entry.pain === 1 ? (
