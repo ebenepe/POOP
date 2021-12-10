@@ -18,7 +18,7 @@ import { auth } from "../firebase-config";
 // If they are logged out, they can log in with an existing username and password here
 
 function Login(props) {
-  // states to hold email & password when first registering
+  // states to hold email, password, and name when first registering
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerName, setRegisterName] = useState("");
@@ -30,9 +30,11 @@ function Login(props) {
   // state for storing active user object
   const [user, setUser] = useState({});
 
+  // defining react-firebase-auth hooks
   const [usr, loading] = useAuthState(auth);
 
-  const [error, setError] = useState(null)
+  // creating state in which to store error message / access it later for displaying error messages in JSX
+  const [error, setError] = useState(null);
 
   // function to log out
   const logout = () => {
@@ -54,11 +56,11 @@ function Login(props) {
         registerEmail,
         registerPassword
       ).then(() => {
+        // updating profile at time of creation to include displayName entered by user
         updateProfile(getAuth().currentUser, {
           displayName: registerName,
         });
       });
-      // window.location = "/";
     } catch (error) {
       // log error if something goes wrong
       console.log(error);
@@ -79,38 +81,45 @@ function Login(props) {
     } catch (error) {
       // setting error state which will be used to display jsx later on
       setError(error.message);
-      console.log(error.message)
+      console.log(error.message);
     }
   };
 
   return (
     <div id="login">
-      {/* ternary checks whether user is logged in, displays accordingly */}
+      {/* don't display anything until page is done loading (loading variable comes from react-firebase-auth library) */}
       {loading ? null : (
         <>
+          {/* ternary checks whether user is logged in*/}
           {user ? (
+            //
+            // jsx for user already logged in
+            //
             <div className="login-input">
               <h3>
-                You are logged in as {" "} <br/>
-                {user.displayName
-                  ? user.displayName
-                  : user.email
-                }
+                You are logged in as <br />
+                {/* if "user" has a displayName, show it. otherwise, show their email */}
+                {user.displayName ? user.displayName : user.email}
                 . <br />
+                {/* link to redirect page assigned in props */}
                 <NavLink to={props.loginRedirect}>
                   Click here to continue to the {props.nextPageName} page
                 </NavLink>
               </h3>
+              {/* sign out button (uses logout function defined above, which uses Firebase's signOut() ) */}
               <button onClick={logout}>Sign out</button>
             </div>
           ) : (
+            //
+            // jsx for user not yet logged in
+            //
             <>
-              
-              {/*  */}
-              {/* section for logging into existing account */}
-              {/*  */}
+              {/* form for logging into existing account */}
               <div className="login-input" id="login-existing">
-                <h3><span className="bold">Sign in</span></h3>
+                <h3>
+                  <span className="bold">Sign in</span>
+                </h3>
+                {/* email input */}
                 <input
                   placeholder="Enter Your Email"
                   // update registerEmail state when user types into field
@@ -119,7 +128,17 @@ function Login(props) {
                   }}
                 />
                 {/* error case for wrong email address */}
-                {error === "Firebase: Error (auth/user-not-found)." || error === "Firebase: Error (auth/invalid-email)." ? <p className="login-error">This email is not in our system.<br/>Please check that you entered it correctly, or create a new account.</p> : null}
+                {error === "Firebase: Error (auth/user-not-found)." ||
+                error === "Firebase: Error (auth/invalid-email)." ? (
+                  // display red text describing error
+                  <p className="login-error">
+                    This email is not in our system.
+                    <br />
+                    Please check that you entered it correctly, or create a new
+                    account.
+                  </p>
+                ) : null}
+                {/* input for password entry */}
                 <input
                   placeholder="Enter Your Password"
                   // update loginPassword state when user types into field
@@ -128,16 +147,38 @@ function Login(props) {
                   }}
                 />
                 {/* additional error handling for specific cases */}
-                {error === "Firebase: Error (auth/wrong-password)." ? <p className="login-error">Invalid password. Please try again.</p> : null}
-                {error === "Firebase: Error (auth/internal-error)." ? <p className="login-error">Please enter a valid email and password.</p> : null}
-                {error === "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)." ? <p className="login-error">Access to this account has been temporarily disabled due to too many failed login attempts.<br/>Please try again later.</p> : null}
+                {/* wrong password error */}
+                {error === "Firebase: Error (auth/wrong-password)." ? (
+                  <p className="login-error">
+                    Invalid password. Please try again.
+                  </p>
+                ) : null}
+                {/* general errors */}
+                {error === "Firebase: Error (auth/internal-error)." ? (
+                  <p className="login-error">
+                    Please enter a valid email and password.
+                  </p>
+                ) : null}
+                {/* account locked error */}
+                {error ===
+                "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)." ? (
+                  <p className="login-error">
+                    Access to this account has been temporarily disabled due to
+                    too many failed login attempts.
+                    <br />
+                    Please try again later.
+                  </p>
+                ) : null}
 
                 {/* call login function on click */}
                 <button onClick={login}>Log in</button>
               </div>
+              {/* form for creating new account */}
               <div className="login-input" id="login-register">
-                {/* section for registering new account */}
-                <h3><span className="bold">Create a new account</span></h3>
+                <h3>
+                  <span className="bold">Create a new account</span>
+                </h3>
+                {/* email input */}
                 <input
                   placeholder="Enter your Email"
                   // update registerEmail state when user types into field
@@ -145,6 +186,7 @@ function Login(props) {
                     setRegisterEmail(event.target.value);
                   }}
                 />
+                {/* password input */}
                 <input
                   placeholder="Enter a Password"
                   // update registerPassword state when user types into field
@@ -152,6 +194,7 @@ function Login(props) {
                     setRegisterPassword(event.target.value);
                   }}
                 />
+                {/* name input */}
                 <input
                   placeholder="Enter your name"
                   // update registerName state when user types into field
