@@ -150,7 +150,7 @@ p.login-header {
 .dashboard-table th,
 td {
   border: 1px solid #7a7a7a;
-  text-align: left;
+  text-align: center;
   padding: 8px;
   font-size: 16px;
 }
@@ -163,7 +163,7 @@ td {
 
 .dashboard-table td {
   background-color: rgb(225, 235, 241);
-}
+  }
 
 .dashboard-table form {
   display: flex;
@@ -173,7 +173,7 @@ td {
 .dashboard-table form td:last-child {
   display: flex;
   justify-content: space-evenly;
-}
+ }
 
 .dashboard-table form * {
   font-size: 20px;
@@ -190,7 +190,7 @@ td {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-}
+  }
 
 .formPage {
   max-width: 90%;
@@ -288,7 +288,7 @@ input:focus {
 #BMdate {
   padding-top: 0.2em;
   font-size: 1rem;
-}
+  }
 
 h1,
 h2 {
@@ -309,6 +309,7 @@ h2 {
 
 .patient-name {
   align-self: flex-start;
+  font-weight: bold;
 }
 
 #logo {
