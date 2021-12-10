@@ -17,6 +17,7 @@ import { signOut } from "firebase/auth";
 
 function ProviderDashboard(props) {
   const [records, setRecords] = useState([]);
+  const [userNames, setUserNames] = useState([]);
   const usersCollectionRef = collection(db, "data");
 
   const [user, loading, error] = useAuthState(auth);
@@ -31,6 +32,35 @@ function ProviderDashboard(props) {
     orderBy("date", "desc")
   );
 
+  // function to create list of unique names in db
+  function populateNames(records) {
+    // create buffer array to be populated with names that are in the database
+    let names = [];
+    // create variable to track duplicates
+    let match = false;
+    // loop through all items in records
+    for (let item of records) {
+      // check names buffer array, set match = true if name is already on the list
+      for (let entry of names) {
+        if (item.name == entry) {
+          match = true;
+        }
+      }
+      if (match == false) {
+        // add name to buffer array if it's not on there already
+        names.push(item.name);
+      }
+      // reset match at end of cycle
+      match = false;
+    }
+    // sort names array alphabetically
+    names.sort().unshift("...   ");
+    // update state with buffer array
+    setUserNames(names);
+    // console.log("userNames: ")
+    // console.log(userNames)
+  }
+
   // This area is to read all of the entries on the DB
   // and will most likely be moved to the admin dashboard
   // R is for READ (all)
@@ -38,14 +68,28 @@ function ProviderDashboard(props) {
   useEffect(() => {
     const getEntries = async () => {
       const data = await getDocs(q);
-      // console.log('data:')
-      // console.log(data) // for testing purposes
-      setRecords(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); // for testing purposes
+      const dataParsed = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      // console.log('data.docs: ')
+      // console.log(data.docs) // for testing purposes
+      setRecords(dataParsed);
+      // console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); // for testing purposes
+
+      populateNames(dataParsed);
+      // console.log("records");
+      // console.log(records);
     };
     getEntries();
+    // console.log("records: ")
+    // console.log(records)
   }, []);
   // **********************************
+  // console.log("records 2");
+  // console.log(records);
+  // console.log("userNames: ");
+  // console.log(userNames);
 
   function dateConvert(input) {
     let formattedDate = new Date(input);
@@ -63,7 +107,6 @@ function ProviderDashboard(props) {
   }
 
   // function for onClick for patient names
-
   return (
     <div className="dashboard-page">
       {user ? (
@@ -80,18 +123,38 @@ function ProviderDashboard(props) {
       ) : null}
       <h2 className="login-header">Provider Dashboard</h2>
 
-      <div>
-      <form >
-        <input type="text" onChange={(evt) => {setPatientName(evt.target.value)}}/>
-        
-        <Link to="/provider/dashboard/patient-data" state={{ patientName: patientName }}>
-        <button type="submit" onSubmit={(evt) =>{evt.preventDefault()}}>
-        Search</button>
-        </Link>
-      </form>
-    </div>
-
-      <p className="patient-name">All Patients</p>
+      <div id="dashboard-header">
+        <p className="patient-name bold">All Patients</p>
+        <form id="dropdown-form">
+          <div id="dropdown-menu">
+            <p id="select-tag">Select a patient:</p>
+            <select
+              type="text"
+              onChange={(evt) => {
+                setPatientName(evt.target.value);
+              }}
+            >
+              {userNames.map((element) => (
+                <option value={element}>{element}</option>
+              ))}
+            </select>
+            <Link
+              to="/provider/dashboard/patient-data"
+              state={{ patientName: patientName }}
+            >
+              <button
+                id="dropdown-button"
+                type="submit"
+                onSubmit={(evt) => {
+                  evt.preventDefault();
+                }}
+              >
+                Select
+              </button>
+            </Link>
+          </div>
+        </form>
+      </div>
 
       <div className="dashboard-table">
         <table>
@@ -119,16 +182,26 @@ function ProviderDashboard(props) {
                     </Link>
                   </td>
                   <td>
-                    {entry.bristol === 0 ? (<span id="bristol0">{entry.bristol}</span>) :
-                    entry.bristol === 1 ? (<span id="bristol1">{entry.bristol}</span>) :
-                    entry.bristol === 2 ? (<span id="bristol2">{entry.bristol}</span>) :
-                    entry.bristol === 3 ? (<span id="bristol3">{entry.bristol}</span>) :
-                    entry.bristol === 4 ? (<span id="bristol4">{entry.bristol}</span>) :
-                    entry.bristol === 5 ? (<span id="bristol5">{entry.bristol}</span>) :
-                    entry.bristol === 6 ? (<span id="bristol6">{entry.bristol}</span>) :
-                    entry.bristol === 7 ? (<span id="bristol7">{entry.bristol}</span>) :
-                    (<span id="bristol-empty">{entry.bristol}</span>)
-                  }</td>
+                    {entry.bristol === 0 ? (
+                      <span id="bristol0">{entry.bristol}</span>
+                    ) : entry.bristol === 1 ? (
+                      <span id="bristol1">{entry.bristol}</span>
+                    ) : entry.bristol === 2 ? (
+                      <span id="bristol2">{entry.bristol}</span>
+                    ) : entry.bristol === 3 ? (
+                      <span id="bristol3">{entry.bristol}</span>
+                    ) : entry.bristol === 4 ? (
+                      <span id="bristol4">{entry.bristol}</span>
+                    ) : entry.bristol === 5 ? (
+                      <span id="bristol5">{entry.bristol}</span>
+                    ) : entry.bristol === 6 ? (
+                      <span id="bristol6">{entry.bristol}</span>
+                    ) : entry.bristol === 7 ? (
+                      <span id="bristol7">{entry.bristol}</span>
+                    ) : (
+                      <span id="bristol-empty">{entry.bristol}</span>
+                    )}
+                  </td>
                   <td>{entry.blood ? <span id="blood">YES</span> : "none"}</td>
                   <td>
                     {entry.pain === 0 ? (

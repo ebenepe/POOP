@@ -85,7 +85,7 @@ function PatientData(props) {
       ) : null}
       <h2 className="login-header">Provider Dashboard</h2>
       <div className="patient-data-nav">
-        <p className="patient-name">Name: {location.state.patientName}</p>
+        <p className="patient-name"><span className="bold">Name:</span> {location.state.patientName}</p>
         <NavLink className="link-back" to="/provider/dashboard">
           Back
         </NavLink>
