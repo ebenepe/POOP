@@ -75,10 +75,10 @@ function PatientData(props) {
         <div className="login-hud">
           {/* checking for existence of displayName, if so indicate that that user is logged in, otherwise indicate email of logged in user */}
           <p>
-          <span className="bold">
+         
             Logged in{" "}
             {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}
-            </span>
+           
           </p>
           <button onClick={logout}>Sign Out</button>
         </div>
