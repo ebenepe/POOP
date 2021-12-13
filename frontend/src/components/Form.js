@@ -40,23 +40,11 @@ function Form() {
     } else {
       const timestamp = new Date(poopDate);
 
-      // setUid(newName + 123);
-      // adds entry to db
-      // setPain(parseInt(pain));
-      // console.log("typeof pain: ", typeof pain)
-      // setBristol(parseInt(bristol));
-      // setBlood(blood === "yes" ? true : false);
-      // console.log("typeof blood: ", typeof blood)
-      // setPoopDate(poopDate);
-
       await addDoc(usersCollectionRef, {
         name: user.displayName,
         pain: pain,
         bristol: bristol,
         blood: blood,
-        // ,
-        // uid: uid,
-        // ,
         date: poopDate,
       });
       window.location = "/submitted";
@@ -99,36 +87,25 @@ function Form() {
       {/* user variable comes from useAuthState hook */}
       {user ? (
         <div className="login-hud">
+      
           {/* checking for existence of displayName, if so indicate that that user is logged in, otherwise indicate email of logged in user */}
-          <p>
+          <span className="bold">
             Logged in{" "}
-            {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}.
-          </p>
-          <button onClick={logout}>Sign Out</button>
-        </div>
+            {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}
+          </span>
+
+          <button className="logout-button" onClick={logout}>Sign Out</button>
+          </div>
+        
       ) : null}
       <div id="form">
         <h1>Patient Form</h1>
         <form>
-          {/* <br />
-      <hr />
-      <div>
-      <h3>Log NO Bowel Movement:</h3>
-        <label>I did NOT have a bowel movement on this date: </label>
-        <input
-          type="date"
-          name="noBM"
-          onChange={(e) => {
-            setPoopDate(e.target.value);
-          }}
-        />
-        <button onClick={createEntry}>Submit</button>
-      </div> */}
-          <h3>Log a Bowel Movement Here:</h3>
+          <h3>Please use this form to log every bowel movement, as well as to log every day that you do <i>not</i> have a bowel movement.</h3>
           <div>
             <div className="formQuestion">
               <label>
-                Date of Bowel Movement:
+                <span className="bold">Date of Bowel Movement (or the Absence of a Bowel Movement):</span>
                 <input
                   type="date"
                   name="BMdate"
@@ -141,10 +118,14 @@ function Form() {
             </div>
             <br />
             <div className="formQuestion">
-              <label className="formAsk">
-                1. Based on the Bristol Stool Scale, what did your bowel
-                movement look like? <br />
-                (click the image that best matches)
+              <label>
+                <span className="bold">
+                  1. What did your bowel movement look like?
+                </span>
+                <br />
+                <span className="italic">
+                  Please select the image/description that best matches.
+                </span>
                 <ul class="bristol_ul">
                   <li>
                     <br />
@@ -157,7 +138,10 @@ function Form() {
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />I did not have a bowel movement today.
+                      />
+                      <span className="bold">
+                        I did not have a bowel movement today.
+                      </span>
                     </label>
                   </li>
                   <hr />
@@ -169,12 +153,13 @@ function Form() {
                         type="radio"
                         value="1"
                         name="bristol"
-                        // checked={bristol === "1"}
                         onChange={(e) => {
                           setBristol(parseInt(e.target.value));
                         }}
-                      />Type 1<br/>Separate hard lumps
+                      />
+                      <span className="bristol-bold">Type 1</span>Separate hard lumps
                       <img
+                        className="poop-img"
                         src="../images/img_bristol_1.jpg"
                         alt="Type 1: Separate hard lumps"
                       />
@@ -192,8 +177,10 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      Type 2<br/>Lumpy and sausage-like
+                      <span className="bristol-bold">Type 2</span>Lumpy and sausage-like
+                      <br />
                       <img
+                        className="poop-img"
                         src="../images/img_bristol_2.jpg"
                         alt="Type 2: Lumpy and sausage-like"
                       />
@@ -213,9 +200,11 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      Type 3<br/>A sausage shape with cracks in<br/>
-                      the surface
+                      <span className="bristol-bold">Type 3</span>A sausage shape with
+                      cracks in the surface
+                      <br />
                       <img
+                        className="poop-img"
                         src="../images/img_bristol_3.jpg"
                         alt="Type 3: A sausage shape with cracks in the surface"
                       />
@@ -235,8 +224,11 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      Type 4<br/>Like a smooth, soft sausage or snake
+                      <span className="bristol-bold">Type 4</span>Like a smooth, soft
+                      sausage or snake
+                      <br />
                       <img
+                        className="poop-img"
                         src="../images/img_bristol_4.jpg"
                         alt="Type 4: Like a smooth, soft sausage or snake"
                       />
@@ -256,8 +248,11 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      Type 5<br/>Soft blobs with clear-cut edges
+                      <span className="bristol-bold">Type 5</span>Soft blobs with
+                      clear-cut edges
+                      <br />
                       <img
+                        className="poop-img"
                         src="../images/img_bristol_5.jpg"
                         alt="Type 5: Soft blobs with clear-cut edges"
                       />
@@ -277,8 +272,11 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      Type 6<br/>Mushy consistency with ragged edges
+                      <span className="bristol-bold">Type 6</span>Mushy consistency with
+                      ragged edges
+                      <br />
                       <img
+                        className="poop-img"
                         src="../images/img_bristol_6.jpg"
                         alt="Type 6: Mushy consistency with ragged edges"
                       />
@@ -299,8 +297,11 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      Type 7<br/>Liquid consistency with no solid pieces
+                      <span className="bristol-bold">Type 7</span>Liquid consistency
+                      with no solid pieces
+                      <br />
                       <img
+                        className="poop-img"
                         src="../images/img_bristol_7.jpg"
                         alt="Type 7: Liquid consistency with no solid pieces"
                       />
@@ -311,15 +312,19 @@ function Form() {
             </div>
 
             <br />
-
-            <br />
             <div className="formQuestion">
-              <label className="formAsk">
-                2. Based on this pain scale, how much pain did you feel around
-                this bowel movement? If you did not have a bowel movement,
-                please select the answer with the worst pain you felt today
-                related to your gastrointestinal system.
-                <img id="pain_chart " src="./images/pain_chart.jpg" />
+              <label>
+                <span className="bold">
+                  2. Based on this pain scale, how much pain did you feel around
+                  this bowel movement?
+                </span>
+                <span className="italic">
+                  If you did not have a bowel movement, please select the answer
+                  with the worst pain you felt today related to your
+                  gastrointestinal system.
+                </span>
+                <br />
+                <img id="pain-chart" src="./images/pain-scale.jpeg" />
                 <ul>
                   <label>
                     <li>
@@ -482,37 +487,37 @@ function Form() {
             </div>
             <br />
             <div className="formQuestion">
-              <label className="formAsk">
+              <label className="bold">
                 3. Was there any blood in your stool or on the toilet paper?
+                </label>
                 <ul>
                   <label>
-                  <li>
-                    <input
-                      type="radio"
-                      value="yes"
-                      name="blood"
-                      onChange={(e) => {
-                        setBlood(e.target.value === "yes" ? true : false);
-                      }}
-                    />
-                    Yes
-                  </li>
+                    <li>
+                      <input
+                        type="radio"
+                        value="yes"
+                        name="blood"
+                        onChange={(e) => {
+                          setBlood(e.target.value === "yes" ? true : false);
+                        }}
+                      />
+                      Yes
+                    </li>
                   </label>
                   <label>
-                  <li>
-                    <input
-                      type="radio"
-                      value="no"
-                      name="blood"
-                      onChange={(e) => {
-                        setBlood(e.target.value === "no" ? false : true);
-                      }}
-                    />
-                    No
-                  </li>
+                    <li>
+                      <input
+                        type="radio"
+                        value="no"
+                        name="blood"
+                        onChange={(e) => {
+                          setBlood(e.target.value === "no" ? false : true);
+                        }}
+                      />
+                      No
+                    </li>
                   </label>
                 </ul>
-                </label>
             </div>
             <div id="confirmation-box">
               <h3>

@@ -139,7 +139,7 @@ function Login(props) {
                   </p>
                 ) : null}
                 {/* input for password entry */}
-                <input
+                <input type="password"
                   placeholder="Enter Your Password"
                   // update loginPassword state when user types into field
                   onChange={(event) => {
@@ -187,7 +187,7 @@ function Login(props) {
                   }}
                 />
                 {/* password input */}
-                <input
+                <input type="password"
                   placeholder="Enter a Password"
                   // update registerPassword state when user types into field
                   onChange={(event) => {
