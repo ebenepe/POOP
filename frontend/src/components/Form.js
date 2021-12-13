@@ -1,16 +1,13 @@
 // Necessary imports:
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { db, auth } from "../firebase-config";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
-import { isValidTimestamp } from "@firebase/util";
 
 function Form() {
-  const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, "data");
-  const [uid, setUid] = useState();
 
   // Variable for date of BM or no-BM:
   const [poopDate, setPoopDate] = useState(null);
@@ -18,14 +15,12 @@ function Form() {
   const [bristol, setBristol] = useState(null);
   const [blood, setBlood] = useState(null);
   const [pain, setPain] = useState(null);
-  const [noPoop, setNoPoop] = useState();
 
   const [user, loading, error] = useAuthState(auth);
   // function that logs out user
   const logout = () => {
     signOut(auth);
   };
-
 
   const createEntry = async (evt) => {
     evt.preventDefault(); // prevents refresh before submitting to db
@@ -38,7 +33,6 @@ function Form() {
     ) {
       alert("Please answer all questions before submitting");
     } else {
-      const timestamp = new Date(poopDate);
       // adds submitted data to database if completely filled out
       await addDoc(usersCollectionRef, {
         name: user.displayName,
@@ -51,19 +45,6 @@ function Form() {
     }
   };
 
-  // This area is to read all of the entries on the DB
-  // and will most likely be moved to the admin dashboard
-  // R is for READ (all)
-  // loads data when page is loaded
-  useEffect(() => {
-    const getEntries = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); // for testing purposes
-    };
-    getEntries();
-  }, []);
-  // **********************************
   // convert date to year/month/day instead of milliseconds
   function dateConvert(input) {
     let formattedDate = new Date(input);
