@@ -19,6 +19,7 @@
   "homepage": "https://github.com/burlingtoncodeacademy-students/POOP#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "firebase": "^9.5.0"
+    "firebase": "^9.5.0",
+    "helmet": "^4.6.0"
   }
 }
