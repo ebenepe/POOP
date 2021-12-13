@@ -1,19 +1,11 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { db, auth } from "../firebase-config";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  query,
-  where,
-  orderBy,
-} from "firebase/firestore";
+import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { useLocation, NavLink } from "react-router-dom";
 
-function PatientData(props) {
+function PatientData() {
   const [records, setRecords] = useState([]);
   const usersCollectionRef = collection(db, "data");
 
@@ -21,39 +13,31 @@ function PatientData(props) {
   console.log("location: ", location);
   console.log(location.state.patientName);
 
-  // trying out a filter ability:
-  let q = query(
+  // filtering query pulling just the patientName's entries and sorting by date, newest first
+  let querySorted = query(
     usersCollectionRef,
     where("name", "==", location.state.patientName),
     orderBy("date", "desc")
   );
-
-  // USE THIS AREA FOR THE SORT BY OLDEST-TO-NEWEST DATE FOR THE PROVIDER DASHBOARD
-  // const q = query(
-  //   usersCollectionRef,
-  //   // where("name", "==", location.state.patientName)
-  //   // ,
-  //   orderBy("date", "asc")
-  // );
-
+  // setting user as the current authentication state
   const [user, loading, error] = useAuthState(auth);
 
   // This area is to read all of the entries on the DB
-  // and will most likely be moved to the admin dashboard
-  // R is for READ (all)
   // loads data when page is loaded
   useEffect(() => {
     const getEntries = async () => {
-      const data = await getDocs(q);
-      // console.log('data:')
-      // console.log(data) // for testing purposes
-      setRecords(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))); // for testing purposes
+      const data = await getDocs(querySorted);
+      const dataParsed = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      // puts the retrieved info into the records variable
+      setRecords(dataParsed);
     };
     getEntries();
   }, []);
-  // **********************************
 
+  // converts the date in the database from seconds to a formatted date
   function dateConvert(input) {
     let formattedDate = new Date(input);
     let month = formattedDate.getMonth();
@@ -64,6 +48,7 @@ function PatientData(props) {
     return dateString;
   }
 
+  // logs out the current user and sends them to the Provider login page
   function logout() {
     signOut(auth);
     window.location = "/provider";
@@ -85,7 +70,10 @@ function PatientData(props) {
       ) : null}
       <h2 className="login-header">Provider Dashboard</h2>
       <div className="patient-data-nav">
-        <p className="patient-name"><span className="bold">Name:</span> {location.state.patientName}</p>
+        <p className="patient-name">
+          <span className="bold">Name:</span> {location.state.patientName}
+        </p>
+        // link to go back to the provider dashboard
         <NavLink className="link-back" to="/provider/dashboard">
           Back
         </NavLink>
@@ -93,6 +81,7 @@ function PatientData(props) {
       <div className="dashboard-table">
         <table>
           <thead>
+            {/* Heading for the table of entries starts here */}
             <tr>
               <th>Date</th>
               <th>Bristol Type</th>
@@ -102,22 +91,41 @@ function PatientData(props) {
           </thead>
 
           <tbody>
+            {/* each entry is returned as a row to this table  */}
             {records.map((entry) => {
               return (
                 <tr>
+                  {/* the date is formatted for display */}
                   <td>{dateConvert(entry.date)}</td>
-                  <td>{entry.bristol === 0 ? (<span id="bristol0">{entry.bristol}</span>) :
-                    entry.bristol === 1 ? (<span id="bristol1">{entry.bristol}</span>) :
-                    entry.bristol === 2 ? (<span id="bristol2">{entry.bristol}</span>) :
-                    entry.bristol === 3 ? (<span id="bristol3">{entry.bristol}</span>) :
-                    entry.bristol === 4 ? (<span id="bristol4">{entry.bristol}</span>) :
-                    entry.bristol === 5 ? (<span id="bristol5">{entry.bristol}</span>) :
-                    entry.bristol === 6 ? (<span id="bristol6">{entry.bristol}</span>) :
-                    entry.bristol === 7 ? (<span id="bristol7">{entry.bristol}</span>) :
-                    (<span id="bristol-empty">{entry.bristol}</span>)
-                  }</td>
-                  <td>{entry.blood ? <span id="blood">YES</span> : "none"}</td>
-                  <td>{entry.pain === 0 ? (
+                  <td>
+                    {/* nested ternary for displaying the bristol data for the entry */}
+                    {entry.bristol === 0 ? (
+                      <span id="bristol0">{entry.bristol}</span>
+                    ) : entry.bristol === 1 ? (
+                      <span id="bristol1">{entry.bristol}</span>
+                    ) : entry.bristol === 2 ? (
+                      <span id="bristol2">{entry.bristol}</span>
+                    ) : entry.bristol === 3 ? (
+                      <span id="bristol3">{entry.bristol}</span>
+                    ) : entry.bristol === 4 ? (
+                      <span id="bristol4">{entry.bristol}</span>
+                    ) : entry.bristol === 5 ? (
+                      <span id="bristol5">{entry.bristol}</span>
+                    ) : entry.bristol === 6 ? (
+                      <span id="bristol6">{entry.bristol}</span>
+                    ) : entry.bristol === 7 ? (
+                      <span id="bristol7">{entry.bristol}</span>
+                    ) : (
+                      <span id="bristol-empty">{entry.bristol}</span>
+                    )}
+                  </td>
+                  <td>
+                    {/* if there is blook present, this will be displayed red */}
+                    {entry.blood ? <span id="blood">YES</span> : "none"}
+                  </td>
+                  <td>
+                    {/* nested ternary for the display of the pain data */}
+                    {entry.pain === 0 ? (
                       <span id="pain0">{entry.pain}</span>
                     ) : entry.pain === 1 ? (
                       <span id="pain1">{entry.pain}</span>
@@ -141,7 +149,8 @@ function PatientData(props) {
                       <span id="pain10">{entry.pain}</span>
                     ) : (
                       <span id="pain-empty">{entry.pain}</span>
-                    )}</td>
+                    )}
+                  </td>
                 </tr>
               );
             })}
