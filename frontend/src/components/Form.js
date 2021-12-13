@@ -157,7 +157,7 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      <span className="bold">Type 1</span>Separate hard lumps
+                      <span className="bristol-bold">Type 1</span>Separate hard lumps
                       <img
                         className="poop-img"
                         src="../images/img_bristol_1.jpg"
@@ -177,7 +177,7 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      <span className="bold">Type 2</span>Lumpy and sausage-like
+                      <span className="bristol-bold">Type 2</span>Lumpy and sausage-like
                       <br />
                       <img
                         className="poop-img"
@@ -200,7 +200,7 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      <span className="bold">Type 3</span>A sausage shape with
+                      <span className="bristol-bold">Type 3</span>A sausage shape with
                       cracks in the surface
                       <br />
                       <img
@@ -224,7 +224,7 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      <span className="bold">Type 4</span>Like a smooth, soft
+                      <span className="bristol-bold">Type 4</span>Like a smooth, soft
                       sausage or snake
                       <br />
                       <img
@@ -248,7 +248,7 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      <span className="bold">Type 5</span>Soft blobs with
+                      <span className="bristol-bold">Type 5</span>Soft blobs with
                       clear-cut edges
                       <br />
                       <img
@@ -272,7 +272,7 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      <span className="bold">Type 6</span>Mushy consistency with
+                      <span className="bristol-bold">Type 6</span>Mushy consistency with
                       ragged edges
                       <br />
                       <img
@@ -297,7 +297,7 @@ function Form() {
                           setBristol(parseInt(e.target.value));
                         }}
                       />
-                      <span className="bold">Type 7</span>Liquid consistency
+                      <span className="bristol-bold">Type 7</span>Liquid consistency
                       with no solid pieces
                       <br />
                       <img
