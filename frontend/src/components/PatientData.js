@@ -59,7 +59,7 @@ function PatientData() {
       {user ? (
         <div className="login-hud">
           {/* checking for existence of displayName, if so indicate that that user is logged in, otherwise indicate email of logged in user */}
-          <p>
+          <p className="bold">
          
             Logged in{" "}
             {user.displayName ? `as ${user.displayName}` : `as ${user.email}`}

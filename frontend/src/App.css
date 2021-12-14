@@ -33,6 +33,7 @@ button {
   background-color: rgb(248, 199, 93);
   font-weight: bold;
   width: 75%;
+  max-width: 250px;
   text-align: center;
   margin: 0 0 0 5px;
   padding: 0.5rem 0 0.25rem 0;
@@ -136,8 +137,9 @@ p.login-header {
 /* Styling of input boxes (email, password, name) on Log-in page */
 #login input {
   width: 75%;
+  max-width: 250px;
   text-align: center;
-  margin: 0 0 0 5px;
+  margin: 0 0 3px 0;
   padding: 0.5rem 0 0.25rem 0;
   font-size: 1rem;
 }
@@ -313,6 +315,10 @@ h3 {
 /* H2 heading on Dashboard page */
 .dashboard-page h2 {
   margin-top: 1em;
+}
+
+#patient-page {
+  max-width: 90%;
 }
 
 /* Formatting of header on Dashboard page */
